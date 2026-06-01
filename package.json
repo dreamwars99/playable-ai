@@ -1,0 +1,32 @@
+{
+  "name": "playable-ai",
+  "version": "0.0.0",
+  "description": "Turn interactive app state into structured AI tasks and human-reviewable candidates.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamwars99/playable-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dreamwars99/playable-ai/issues"
+  },
+  "homepage": "https://github.com/dreamwars99/playable-ai#readme",
+  "keywords": [
+    "ai",
+    "agents",
+    "typescript",
+    "react",
+    "workflow",
+    "structured-output",
+    "prompt-engineering",
+    "local-llm",
+    "openai-compatible"
+  ],
+  "scripts": {
+    "check": "echo \"No build yet. Core package scaffold is next.\""
+  },
+  "packageManager": "pnpm@9.15.0"
+}
+
