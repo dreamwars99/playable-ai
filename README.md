@@ -159,6 +159,21 @@ This project is intentionally generic.
 
 Commercial apps can keep their domain-specific prompts, private workflows, paid features, and production infrastructure closed while still using or contributing to the shared task/candidate workflow layer.
 
+## Customize It With Your AI Agent
+
+Playable AI is meant to be changed. Give this repository to your coding agent, ask it to read [`AGENTS.md`](./AGENTS.md), and have it create a task pack for your own app.
+
+For example:
+
+```text
+Read README.md and AGENTS.md in this repository.
+My app is a [game/editor/dashboard/board].
+Design a Playable AI task pack that turns my app state into AI-readable tasks,
+returns reviewable candidates, and never mutates my app state directly.
+```
+
+Your app keeps its own UI, backend, database, prompts, and business logic. Playable AI only provides the modifiable contract between app state, AI tasks, provider output, and human review.
+
 ## For AI Coding Agents
 
 This repository includes an [`AGENTS.md`](./AGENTS.md) guide for Codex, OpenCode, Cline, Claude Code, and other AI coding agents. It explains the project boundaries, moddability contract, provider safety rules, and how to add task packs or examples without turning Playable AI into a closed prompt wrapper.
