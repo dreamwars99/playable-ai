@@ -1,14 +1,10 @@
-import { StrictMode, useMemo, useState } from "react";
+import { useCandidateQueue, usePlayableProviderRunner, usePlayableTaskPack } from "@playable-ai/react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  acceptCandidate,
   applyCandidateOperations,
   createCandidate,
-  createEmptyQueue,
   createMockProvider,
-  createTaskFromPack,
-  enqueueCandidates,
-  ignoreCandidate,
   type PlayableCandidate,
   type PlayableOperation,
   type PlayableTaskPack
@@ -57,6 +53,12 @@ const initialState: TacticsState = {
     { id: "red-2", label: "R", team: "enemy", x: 5, y: 1 },
     { id: "red-3", label: "G", team: "enemy", x: 4, y: 4 }
   ]
+};
+
+const tacticsScope = {
+  app: "tactics-grid-example",
+  surface: "level-editor",
+  entityId: "training-level-01"
 };
 
 const tacticsTaskPack: PlayableTaskPack<TacticsState> = {
@@ -132,30 +134,24 @@ const mockProvider = createMockProvider({
 
 function App() {
   const [state, setState] = useState<TacticsState>(initialState);
-  const [queue, setQueue] = useState(createEmptyQueue<TacticsOperation>());
+  const queueController = useCandidateQueue<TacticsOperation>();
 
-  const task = useMemo(
-    () =>
-      createTaskFromPack(tacticsTaskPack, state, {
-        app: "tactics-grid-example",
-        surface: "level-editor",
-        entityId: "training-level-01"
-      }),
-    [state]
-  );
+  const task = usePlayableTaskPack(tacticsTaskPack, state, tacticsScope, [state]);
+  const providerRunner = usePlayableProviderRunner(mockProvider, {
+    onCandidates: queueController.enqueue
+  });
 
   const runAnalysis = async () => {
-    const result = await mockProvider.run({ task });
-    setQueue((current) => enqueueCandidates(current, result.candidates));
+    await providerRunner.run(task);
   };
 
   const applyCandidate = (candidate: PlayableCandidate<TacticsOperation>) => {
     setState((current) => applyCandidateOperations(current, candidate, applyTacticsOperation));
-    setQueue((current) => acceptCandidate(current, candidate.id));
+    queueController.accept(candidate.id);
   };
 
   const ignore = (candidateId: string) => {
-    setQueue((current) => ignoreCandidate(current, candidateId));
+    queueController.ignore(candidateId);
   };
 
   return (
@@ -169,8 +165,8 @@ function App() {
             reviewable candidates.
           </p>
         </div>
-        <button type="button" onClick={runAnalysis}>
-          Analyze level
+        <button type="button" disabled={providerRunner.isRunning} onClick={runAnalysis}>
+          {providerRunner.isRunning ? "Analyzing" : "Analyze level"}
         </button>
       </section>
 
@@ -188,11 +184,12 @@ function App() {
 
         <div className="side-panel">
           <h2>Review candidates</h2>
-          {queue.pending.length === 0 ? (
+          {providerRunner.error ? <p className="empty">Provider error: {providerRunner.error.message}</p> : null}
+          {queueController.queue.pending.length === 0 ? (
             <p className="empty">Run analysis to generate mock candidates.</p>
           ) : (
             <div className="candidate-list">
-              {queue.pending.map((candidate) => (
+              {queueController.queue.pending.map((candidate) => (
                 <article className="candidate-card" key={candidate.id}>
                   <span>{Math.round((candidate.confidence ?? 0) * 100)}% confidence</span>
                   <h3>{candidate.title}</h3>

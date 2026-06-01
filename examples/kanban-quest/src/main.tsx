@@ -1,14 +1,10 @@
-import { StrictMode, useMemo, useState } from "react";
+import { useCandidateQueue, usePlayableProviderRunner, usePlayableTaskPack } from "@playable-ai/react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  acceptCandidate,
   applyCandidateOperations,
   createCandidate,
-  createEmptyQueue,
   createMockProvider,
-  createTaskFromPack,
-  enqueueCandidates,
-  ignoreCandidate,
   type PlayableCandidate,
   type PlayableOperation,
   type PlayableTaskPack
@@ -55,6 +51,12 @@ const initialState: KanbanState = {
     { id: "card-3", title: "Sketch provider safety docs", column: "todo", priority: "high" },
     { id: "card-4", title: "Create first license file", column: "done", priority: "low" }
   ]
+};
+
+const kanbanScope = {
+  app: "kanban-quest-example",
+  surface: "board",
+  entityId: "oss-launch"
 };
 
 const kanbanTaskPack: PlayableTaskPack<KanbanState> = {
@@ -119,30 +121,24 @@ const mockProvider = createMockProvider({
 
 function App() {
   const [state, setState] = useState<KanbanState>(initialState);
-  const [queue, setQueue] = useState(createEmptyQueue<KanbanOperation>());
+  const queueController = useCandidateQueue<KanbanOperation>();
 
-  const task = useMemo(
-    () =>
-      createTaskFromPack(kanbanTaskPack, state, {
-        app: "kanban-quest-example",
-        surface: "board",
-        entityId: "oss-launch"
-      }),
-    [state]
-  );
+  const task = usePlayableTaskPack(kanbanTaskPack, state, kanbanScope, [state]);
+  const providerRunner = usePlayableProviderRunner(mockProvider, {
+    onCandidates: queueController.enqueue
+  });
 
   const runAnalysis = async () => {
-    const result = await mockProvider.run({ task });
-    setQueue((current) => enqueueCandidates(current, result.candidates));
+    await providerRunner.run(task);
   };
 
   const applyCandidate = (candidate: PlayableCandidate<KanbanOperation>) => {
     setState((current) => applyCandidateOperations(current, candidate, applyKanbanOperation));
-    setQueue((current) => acceptCandidate(current, candidate.id));
+    queueController.accept(candidate.id);
   };
 
   const ignore = (candidateId: string) => {
-    setQueue((current) => ignoreCandidate(current, candidateId));
+    queueController.ignore(candidateId);
   };
 
   return (
@@ -153,8 +149,8 @@ function App() {
           <h1>Kanban Quest Board</h1>
           <p>Stateful app data becomes a task. Model output becomes candidates. Humans decide what lands.</p>
         </div>
-        <button type="button" onClick={runAnalysis}>
-          Find next actions
+        <button type="button" disabled={providerRunner.isRunning} onClick={runAnalysis}>
+          {providerRunner.isRunning ? "Thinking" : "Find next actions"}
         </button>
       </header>
 
@@ -182,11 +178,12 @@ function App() {
 
         <aside className="panel">
           <h2>Candidates</h2>
-          {queue.pending.length === 0 ? (
+          {providerRunner.error ? <p className="empty">Provider error: {providerRunner.error.message}</p> : null}
+          {queueController.queue.pending.length === 0 ? (
             <p className="empty">Generate candidates to review board changes.</p>
           ) : (
             <div className="candidate-list">
-              {queue.pending.map((candidate) => (
+              {queueController.queue.pending.map((candidate) => (
                 <article className="candidate" key={candidate.id}>
                   <span>{Math.round((candidate.confidence ?? 0) * 100)}%</span>
                   <h3>{candidate.title}</h3>

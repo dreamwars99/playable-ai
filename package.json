@@ -26,9 +26,9 @@
   ],
   "scripts": {
     "build": "corepack pnpm -r build",
-    "typecheck": "corepack pnpm -r typecheck",
+    "typecheck": "corepack pnpm --filter playable-ai build && corepack pnpm --filter @playable-ai/react build && corepack pnpm -r typecheck",
     "test": "corepack pnpm --filter playable-ai test",
-    "check": "corepack pnpm --filter playable-ai build && corepack pnpm typecheck && corepack pnpm test && corepack pnpm build"
+    "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm build"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

@@ -60,7 +60,7 @@ packages/core
 
 packages/react
   optional React hooks:
-  usePlayableTask, useCandidateQueue, useProviderRun
+  usePlayableTaskPack, useCandidateQueue, usePlayableProviderRunner
 
 packages/server
   optional Node/server helpers:

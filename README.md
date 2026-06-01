@@ -44,6 +44,7 @@ The first public release includes a small set of reusable primitives:
 - apply policies
 - review queues
 - mock providers
+- React hooks
 - runnable React examples
 
 ## Example Use Cases
@@ -101,9 +102,9 @@ Current focus:
 
 1. harden the core task and candidate model
 2. add integration guides and provider safety docs
-3. add screenshots for the examples
-4. add more task packs
-5. publish the first npm package
+3. grow React integration helpers
+4. add more task packs and provider adapter examples
+5. publish the first npm packages
 
 ## Repository Structure
 
@@ -111,7 +112,7 @@ Playable AI separates reusable SDK code from example apps:
 
 ```text
 packages/core    framework-neutral SDK primitives
-packages/react   optional React integration helpers
+packages/react   optional React hooks for task and candidate workflows
 packages/server  optional backend/provider helpers
 examples/*       isolated demo apps
 docs/*           public documentation
@@ -183,6 +184,27 @@ const candidate = createCandidate({
 
 See [`docs/concepts.md`](./docs/concepts.md) and [`docs/integration.md`](./docs/integration.md) for the integration model.
 
+## React Hooks
+
+React apps can use `@playable-ai/react` for a thin UI wiring layer:
+
+```tsx
+import { useCandidateQueue, usePlayableProviderRunner, usePlayableTaskPack } from "@playable-ai/react";
+
+const task = usePlayableTaskPack(taskPack, appState, {
+  app: "my-app",
+  surface: "board",
+  entityId: "sprint-42"
+});
+
+const queue = useCandidateQueue();
+const runner = usePlayableProviderRunner(provider, {
+  onCandidates: queue.enqueue
+});
+```
+
+The React package does not own provider secrets or apply operations for you. Host apps still decide which candidates can be applied.
+
 ## Provider Model
 
 Playable AI is provider-agnostic.
@@ -200,14 +222,14 @@ See [`docs/provider-safety.md`](./docs/provider-safety.md).
 
 ## React Apps
 
-Playable AI is designed to work well in React apps, but the core package will not require React.
+Playable AI is designed to work well in React apps, but the core package does not require React.
 
-The planned structure:
+The current package split:
 
 ```text
 packages/core      framework-neutral TypeScript primitives
 packages/react     optional React hooks and helpers
-packages/server    optional backend/provider helpers
+packages/server    optional backend/provider helpers, planned
 examples/tactics-grid fictional game/editor demo
 examples/kanban-quest productivity board demo
 ```
@@ -236,6 +258,13 @@ Your app keeps its own UI, backend, database, prompts, and business logic. Playa
 ## For AI Coding Agents
 
 This repository includes an [`AGENTS.md`](./AGENTS.md) guide for Codex, OpenCode, Cline, Claude Code, and other AI coding agents. It explains the project boundaries, moddability contract, provider safety rules, and how to add task packs or examples without turning Playable AI into a closed prompt wrapper.
+
+## Maintainer Notes
+
+- [`CHANGELOG.md`](./CHANGELOG.md) tracks release changes.
+- [`SECURITY.md`](./SECURITY.md) explains security boundaries and vulnerability reporting.
+- [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) sets contribution expectations.
+- [`docs/codex-for-oss-application-notes.md`](./docs/codex-for-oss-application-notes.md) summarizes the project for open-source support applications.
 
 ## License
 
