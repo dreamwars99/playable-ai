@@ -1,0 +1,30 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Use pnpm
+        run: corepack prepare pnpm@9.15.0 --activate
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Check
+        run: pnpm check

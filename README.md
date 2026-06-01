@@ -34,7 +34,7 @@ Playable AI treats AI output as a candidate, not as a direct write. The user sta
 
 ## What This Project Provides
 
-The first public release will focus on a small set of reusable primitives:
+The first public release includes a small set of reusable primitives:
 
 - state snapshots
 - task registry definitions
@@ -43,7 +43,8 @@ The first public release will focus on a small set of reusable primitives:
 - evidence and provenance metadata
 - apply policies
 - review queues
-- React-friendly hooks and examples
+- mock providers
+- runnable React examples
 
 ## Example Use Cases
 
@@ -54,16 +55,54 @@ The first public release will focus on a small set of reusable primitives:
 - a diagram tool that asks AI to detect missing steps
 - a local-first app that can use either a local sLLM endpoint or a remote provider
 
+## Example Apps
+
+Playable AI ships with small example apps that use the same core SDK contract.
+
+| Example | What it proves | Run |
+| --- | --- | --- |
+| `examples/tactics-grid` | A fictional game/editor can turn a level map into reviewable balance candidates. | `pnpm --filter @playable-ai/example-tactics-grid dev` |
+| `examples/kanban-quest` | A normal productivity board can use the same task/candidate flow. | `pnpm --filter @playable-ai/example-kanban-quest dev` |
+
+Both examples use mock providers. They do not call a remote model, do not need API keys, and do not mutate app state until the user applies a candidate.
+
+### Tactics Grid
+
+![Tactics Grid example showing a generated task and reviewable AI candidates](./docs/assets/screenshots/tactics-grid.png)
+
+### Kanban Quest
+
+![Kanban Quest example showing board state, task JSON, and reviewable candidates](./docs/assets/screenshots/kanban-quest.png)
+
+## Open Source Impact
+
+AI features are moving into every kind of open-source app: editors, games, dashboards, local-first tools, maps, notebooks, and simulations. Many projects face the same hard problem: how to let AI inspect app state without letting model output directly overwrite user-owned data.
+
+Playable AI gives maintainers a shared pattern:
+
+```text
+snapshot -> task -> provider -> candidate -> human review -> app-owned apply
+```
+
+That pattern helps open-source projects:
+
+- add AI workflows without exposing provider secrets in frontend code
+- keep users in control of state changes
+- support local models and OpenAI-compatible providers behind the same adapter shape
+- make AI-generated changes reviewable, testable, and reversible
+- let contributors add isolated examples without destabilizing the core SDK
+- give AI coding agents clear instructions for extending a project safely
+
 ## Project Status
 
-Playable AI is in early public development.
+Playable AI is in early public development. The core SDK and two runnable examples exist today.
 
 Current focus:
 
-1. define the core task and candidate model
-2. add a minimal provider adapter contract
-3. ship a small React example
-4. add a manuscript/source-map example
+1. harden the core task and candidate model
+2. add integration guides and provider safety docs
+3. add screenshots for the examples
+4. add more task packs
 5. publish the first npm package
 
 ## Repository Structure
@@ -89,6 +128,7 @@ git clone https://github.com/dreamwars99/playable-ai.git
 cd playable-ai
 corepack enable
 pnpm install
+pnpm check
 ```
 
 After the first npm release, the intended install path will be:
@@ -105,7 +145,7 @@ npm install playable-ai
 
 ## Intended API Shape
 
-The API is still being implemented, but the library is designed around this shape:
+The core API is intentionally small:
 
 ```ts
 import { createTask, createCandidate } from "playable-ai";
@@ -141,6 +181,8 @@ const candidate = createCandidate({
 });
 ```
 
+See [`docs/concepts.md`](./docs/concepts.md) and [`docs/integration.md`](./docs/integration.md) for the integration model.
+
 ## Provider Model
 
 Playable AI is provider-agnostic.
@@ -153,6 +195,8 @@ Adapters can target:
 - mocked or deterministic development providers
 
 Provider keys should stay outside browser bundles. Apps using Playable AI should route sensitive model calls through their own secure backend, local service, or explicitly user-controlled runtime.
+
+See [`docs/provider-safety.md`](./docs/provider-safety.md).
 
 ## React Apps
 
