@@ -168,6 +168,8 @@ Do not claim that Playable AI can magically support every app with no adapter wo
 - Keep core APIs small and serializable.
 - Prefer plain objects and discriminated unions over class-heavy APIs.
 - Keep examples runnable with `pnpm`.
+- Keep example apps isolated under `examples/<example-name>`.
+- Do not modify `packages/core` from an example PR unless the example exposes a missing generic primitive.
 - Add tests once core helpers exist.
 - Add documentation when adding a new public concept.
 - Keep generated screenshots and assets small.
@@ -192,4 +194,3 @@ Do not mix unrelated package scaffolding, examples, and docs rewrites in one com
 Do not copy private product-specific prompts, private domain ontologies, paid workflow logic, customer data, API keys, unreleased assets, or private roadmap details into this repository.
 
 Generic concepts are fine. Private product implementation is not.
-

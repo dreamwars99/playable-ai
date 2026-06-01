@@ -66,6 +66,20 @@ Current focus:
 4. add a manuscript/source-map example
 5. publish the first npm package
 
+## Repository Structure
+
+Playable AI separates reusable SDK code from example apps:
+
+```text
+packages/core    framework-neutral SDK primitives
+packages/react   optional React integration helpers
+packages/server  optional backend/provider helpers
+examples/*       isolated demo apps
+docs/*           public documentation
+```
+
+Example apps should stay inside `examples/<example-name>` so contributors can add demos without creating conflicts in the core SDK. See [`docs/repository-structure.md`](./docs/repository-structure.md) and [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+
 ## Installation
 
 The package is not published to npm yet. For now, use the repository directly:
@@ -149,8 +163,9 @@ The planned structure:
 ```text
 packages/core      framework-neutral TypeScript primitives
 packages/react     optional React hooks and helpers
-examples/react     small playable UI demo
-examples/manuscript source-map and evidence demo
+packages/server    optional backend/provider helpers
+examples/tactics-grid fictional game/editor demo
+examples/kanban-quest productivity board demo
 ```
 
 ## Open-Core Friendly
