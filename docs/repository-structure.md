@@ -63,7 +63,7 @@ They can make it easier to use Playable AI in React apps, but they must not defi
 
 Server helpers are optional integration helpers.
 
-They can help backend apps run provider adapters safely, validate requests, redact sensitive fields, and return candidates.
+They can help backend apps run provider adapters safely, call OpenAI-compatible or local endpoints, validate requests, redact sensitive fields, and return candidates.
 
 ### `examples/*`
 
@@ -120,4 +120,3 @@ docs/**
 ```
 
 This is not a hard security boundary, but it keeps public collaboration manageable.
-

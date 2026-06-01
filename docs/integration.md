@@ -40,6 +40,23 @@ Run the task through a mock provider, backend endpoint, local model, or remote p
 
 Frontend-only examples should use mock providers. Remote provider keys should stay on a backend or user-controlled local runtime.
 
+For backend or local runtime integrations, `@playable-ai/server` includes an OpenAI-compatible adapter:
+
+```ts
+import { createOpenAICompatibleProvider } from "@playable-ai/server";
+
+const provider = createOpenAICompatibleProvider({
+  id: "openai-compatible",
+  endpoint: "https://api.openai.com/v1/chat/completions",
+  apiKey: process.env.OPENAI_API_KEY,
+  model: process.env.OPENAI_MODEL ?? "your-model"
+});
+
+const result = await provider.run({ task });
+```
+
+Use the same shape for local or self-hosted chat-completions-style endpoints by changing `endpoint` and `model`.
+
 ## 4. Operation Mapper
 
 Map candidate operations to your app commands.
@@ -80,4 +97,3 @@ host state
 ```
 
 Playable AI is useful because this flow works across apps without forcing them to share a UI framework, backend, database, or prompt stack.
-

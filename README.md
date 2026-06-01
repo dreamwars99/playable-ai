@@ -1,8 +1,14 @@
 # Playable AI
 
+[![CI](https://github.com/dreamwars99/playable-ai/actions/workflows/check.yml/badge.svg)](https://github.com/dreamwars99/playable-ai/actions/workflows/check.yml)
+[![Release](https://img.shields.io/github/v/release/dreamwars99/playable-ai?include_prereleases)](https://github.com/dreamwars99/playable-ai/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 Turn interactive app state into structured AI tasks and human-reviewable candidates.
 
 Playable AI is an open-source TypeScript toolkit for building applications where the user interacts with a product like a game, board, editor, map, canvas, or studio, while the AI layer works through explicit tasks, structured context, provider adapters, and reviewable results.
+
+It aims to define a small open protocol between users, apps, and AI systems: apps expose scoped snapshots, AI returns structured candidates, and users stay in control of what gets applied.
 
 The core idea is simple:
 
@@ -45,6 +51,7 @@ The first public release includes a small set of reusable primitives:
 - review queues
 - mock providers
 - React hooks
+- server-side provider helpers
 - runnable React examples
 
 ## Example Use Cases
@@ -77,9 +84,9 @@ Both examples use mock providers. They do not call a remote model, do not need A
 
 ## Open Source Impact
 
-AI features are moving into every kind of open-source app: editors, games, dashboards, local-first tools, maps, notebooks, and simulations. Many projects face the same hard problem: how to let AI inspect app state without letting model output directly overwrite user-owned data.
+AI-assisted features are becoming a baseline expectation for many software products. Editors, games, dashboards, local-first tools, maps, notebooks, and simulations increasingly need AI workflows, but most apps still lack a safe, reusable way to connect model output to user-owned application state.
 
-Playable AI gives maintainers a shared pattern:
+Playable AI is for maintainers who want more than a chat box. It gives open-source apps a shared user-app-AI protocol:
 
 ```text
 snapshot -> task -> provider -> candidate -> human review -> app-owned apply
@@ -220,6 +227,21 @@ Provider keys should stay outside browser bundles. Apps using Playable AI should
 
 See [`docs/provider-safety.md`](./docs/provider-safety.md).
 
+Server-side apps can use `@playable-ai/server` to call OpenAI-compatible or local chat-completions-style endpoints:
+
+```ts
+import { createOpenAICompatibleProvider } from "@playable-ai/server";
+
+const provider = createOpenAICompatibleProvider({
+  id: "openai-compatible",
+  endpoint: "https://api.openai.com/v1/chat/completions",
+  apiKey: process.env.OPENAI_API_KEY,
+  model: process.env.OPENAI_MODEL ?? "your-model"
+});
+```
+
+The adapter expects JSON candidates and does not apply operations directly.
+
 ## React Apps
 
 Playable AI is designed to work well in React apps, but the core package does not require React.
@@ -229,7 +251,7 @@ The current package split:
 ```text
 packages/core      framework-neutral TypeScript primitives
 packages/react     optional React hooks and helpers
-packages/server    optional backend/provider helpers, planned
+packages/server    optional backend/provider helpers
 examples/tactics-grid fictional game/editor demo
 examples/kanban-quest productivity board demo
 ```

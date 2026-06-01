@@ -64,7 +64,7 @@ packages/react
 
 packages/server
   optional Node/server helpers:
-  provider execution, request validation, redaction helpers
+  provider execution, OpenAI-compatible adapters, request validation, redaction helpers
 
 examples/tactics-grid
   small React game/editor demo showing board state -> candidates -> apply/reject
