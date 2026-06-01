@@ -159,7 +159,10 @@ This project is intentionally generic.
 
 Commercial apps can keep their domain-specific prompts, private workflows, paid features, and production infrastructure closed while still using or contributing to the shared task/candidate workflow layer.
 
+## For AI Coding Agents
+
+This repository includes an [`AGENTS.md`](./AGENTS.md) guide for Codex, OpenCode, Cline, Claude Code, and other AI coding agents. It explains the project boundaries, moddability contract, provider safety rules, and how to add task packs or examples without turning Playable AI into a closed prompt wrapper.
+
 ## License
 
 MIT
-
