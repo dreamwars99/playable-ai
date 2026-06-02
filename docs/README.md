@@ -5,6 +5,7 @@ This folder contains public documentation for Playable AI.
 Start with:
 
 - [`concepts.md`](./concepts.md)
+- [`api-reference.md`](./api-reference.md)
 - [`integration.md`](./integration.md)
 - [`integration-lifecycle.md`](./integration-lifecycle.md)
 - [`provider-safety.md`](./provider-safety.md)

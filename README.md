@@ -194,7 +194,7 @@ const candidate = createCandidate({
 });
 ```
 
-See [`docs/concepts.md`](./docs/concepts.md), [`docs/integration.md`](./docs/integration.md), and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) for the integration model.
+See [`docs/concepts.md`](./docs/concepts.md), [`docs/api-reference.md`](./docs/api-reference.md), [`docs/integration.md`](./docs/integration.md), and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) for the integration model.
 
 ## React Hooks
 
