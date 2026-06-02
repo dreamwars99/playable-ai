@@ -10,11 +10,14 @@ examples/<example-name>/
 
 Examples should be isolated and runnable with `pnpm`.
 
-Planned examples:
+Current examples:
 
 - `tactics-grid`: fictional 6x6 game/editor balancing demo
 - `kanban-quest`: task board suggestions
 - `timeline-review`: event timeline review for continuity, pacing, and missing bridge candidates
+
+Planned examples:
+
 - `city-sim`: simulation dashboard recommendations
 
 Example apps should not modify `packages/core` unless they expose a missing generic primitive.

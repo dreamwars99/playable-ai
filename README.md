@@ -71,6 +71,7 @@ Playable AI ships with small example apps that use the same core SDK contract.
 | --- | --- | --- |
 | `examples/tactics-grid` | A fictional game/editor can turn a level map into reviewable balance candidates. | `pnpm --filter @playable-ai/example-tactics-grid dev` |
 | `examples/kanban-quest` | A normal productivity board can use the same task/candidate flow. | `pnpm --filter @playable-ai/example-kanban-quest dev` |
+| `examples/timeline-review` | An event timeline can turn continuity and pacing review into small human-approved candidates. | `pnpm --filter @playable-ai/example-timeline-review dev` |
 
 Both examples use mock providers. They do not call a remote model, do not need API keys, and do not mutate app state until the user applies a candidate.
 
@@ -103,7 +104,7 @@ That pattern helps open-source projects:
 
 ## Project Status
 
-Playable AI is in early public development. The core SDK and two runnable examples exist today.
+Playable AI is in early public development. The core SDK and three runnable examples exist today.
 
 Current focus:
 
