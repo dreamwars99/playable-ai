@@ -10,6 +10,8 @@ timeline state -> task pack -> mock provider -> candidate cards -> apply / ignor
 
 This is a generic creative planning example. It reviews continuity, pacing, and missing bridge events without generating long-form prose or taking ownership of the user's timeline.
 
+![Timeline Review example](../../docs/assets/screenshots/timeline-review.png)
+
 Run it:
 
 ```bash

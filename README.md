@@ -73,7 +73,7 @@ Playable AI ships with small example apps that use the same core SDK contract.
 | `examples/kanban-quest` | A normal productivity board can use the same task/candidate flow. | `pnpm --filter @playable-ai/example-kanban-quest dev` |
 | `examples/timeline-review` | An event timeline can turn continuity and pacing review into small human-approved candidates. | `pnpm --filter @playable-ai/example-timeline-review dev` |
 
-Both examples use mock providers. They do not call a remote model, do not need API keys, and do not mutate app state until the user applies a candidate.
+All examples use mock providers. They do not call a remote model, do not need API keys, and do not mutate app state until the user applies a candidate.
 
 ### Tactics Grid
 
@@ -82,6 +82,10 @@ Both examples use mock providers. They do not call a remote model, do not need A
 ### Kanban Quest
 
 ![Kanban Quest example showing board state, task JSON, and reviewable candidates](./docs/assets/screenshots/kanban-quest.png)
+
+### Timeline Review
+
+![Timeline Review example showing event timeline state, task JSON, and reviewable continuity candidates](./docs/assets/screenshots/timeline-review.png)
 
 ## Open Source Impact
 
