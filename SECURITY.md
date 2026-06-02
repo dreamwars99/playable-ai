@@ -36,3 +36,4 @@ The SDK helps structure tasks and reviewable candidates. Host apps must still va
 
 Do not put provider API keys in frontend examples or client bundles. Use a backend, local service, or explicitly user-controlled runtime for sensitive provider calls.
 
+See [`docs/provider-safety.md`](./docs/provider-safety.md) for BYOK, backend-mediated provider, local runtime, and self-hosted provider guidance.
