@@ -6,6 +6,7 @@ Start with:
 
 - [`concepts.md`](./concepts.md)
 - [`integration.md`](./integration.md)
+- [`integration-lifecycle.md`](./integration-lifecycle.md)
 - [`provider-safety.md`](./provider-safety.md)
 - [`repository-structure.md`](./repository-structure.md)
 - [`examples/timeline-review-design.md`](./examples/timeline-review-design.md)

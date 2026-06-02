@@ -97,3 +97,5 @@ host state
 ```
 
 Playable AI is useful because this flow works across apps without forcing them to share a UI framework, backend, database, or prompt stack.
+
+For a step-by-step walkthrough of the full lifecycle, see [`integration-lifecycle.md`](./integration-lifecycle.md).
