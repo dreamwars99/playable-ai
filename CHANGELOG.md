@@ -6,6 +6,10 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+No unreleased changes yet.
+
+## 0.1.1 - 2026-06-02
+
 - Add integration lifecycle documentation.
 - Add API reference draft.
 - Expand provider safety and BYOK guidance.

@@ -1,6 +1,6 @@
 {
   "name": "playable-ai",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-neutral primitives for turning app state into AI tasks and reviewable candidates.",
   "type": "module",
   "private": false,

@@ -1,6 +1,6 @@
 {
   "name": "@playable-ai/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React hooks for Playable AI task and candidate workflows.",
   "type": "module",
   "private": false,
@@ -33,4 +33,3 @@
     "typescript": "^5.9.3"
   }
 }
-
