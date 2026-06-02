@@ -7,6 +7,7 @@ import {
   assertAllowedOperations,
   createCandidate,
   createEmptyQueue,
+  createMockProvider,
   createTask,
   createTaskFromPack,
   enqueueCandidates,
@@ -61,6 +62,21 @@ test("queues, accepts, and ignores candidates", () => {
   assert.equal(ignored.ignored[0]?.status, "rejected");
 });
 
+test("leaves queues unchanged when candidate ids are missing", () => {
+  const candidate = createCandidate({
+    id: "candidate-a",
+    taskId: "task-a",
+    status: "suggested",
+    operations: [],
+    applyPolicy: "review_required"
+  });
+
+  const queue = enqueueCandidates(createEmptyQueue(), [candidate]);
+
+  assert.deepEqual(acceptCandidate(queue, "candidate-missing"), queue);
+  assert.deepEqual(ignoreCandidate(queue, "candidate-missing"), queue);
+});
+
 test("applies candidate operations through a host-owned mapper", () => {
   type CounterOperation = PlayableOperation<{ amount: number }>;
 
@@ -88,6 +104,32 @@ test("applies candidate operations through a host-owned mapper", () => {
   assert.equal(result.value, 3);
 });
 
+test("applies multiple candidate operations in order", () => {
+  type CounterOperation = PlayableOperation<{ amount: number }>;
+
+  const candidate = createCandidate<CounterOperation>({
+    taskId: "counter.review",
+    status: "suggested",
+    applyPolicy: "review_required",
+    operations: [
+      {
+        type: "counter.increment",
+        payload: { amount: 2 }
+      },
+      {
+        type: "counter.increment",
+        payload: { amount: 5 }
+      }
+    ]
+  });
+
+  const result = applyCandidateOperations({ value: 1 }, candidate, (state, operation) => ({
+    value: state.value + operation.payload.amount
+  }));
+
+  assert.equal(result.value, 8);
+});
+
 test("reports operations that are not allowed by the task", () => {
   const task = createTask({
     id: "board.review",
@@ -111,3 +153,55 @@ test("reports operations that are not allowed by the task", () => {
   assert.deepEqual(assertAllowedOperations(task, candidate), ["card.delete"]);
 });
 
+test("allows any operation when a task has no allow list", () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: {}
+  });
+
+  const candidate = createCandidate({
+    taskId: "board.review",
+    status: "suggested",
+    applyPolicy: "review_required",
+    operations: [
+      {
+        type: "card.delete",
+        payload: {}
+      }
+    ]
+  });
+
+  assert.deepEqual(assertAllowedOperations(task, candidate), []);
+});
+
+test("runs mock providers against tasks", async () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: { cards: [] }
+  });
+
+  const provider = createMockProvider({
+    id: "mock-review",
+    generate: (inputTask) => [
+      createCandidate({
+        taskId: inputTask.id,
+        status: "suggested",
+        applyPolicy: "review_required",
+        operations: [
+          {
+            type: "card.create",
+            payload: { title: "Add review note" }
+          }
+        ]
+      })
+    ]
+  });
+
+  const result = await provider.run({ task });
+
+  assert.equal(provider.id, "mock-review");
+  assert.equal(result.candidates[0]?.taskId, "board.review");
+  assert.equal(result.candidates[0]?.operations[0]?.type, "card.create");
+});
