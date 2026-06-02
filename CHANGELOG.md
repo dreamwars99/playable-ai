@@ -11,7 +11,7 @@ This project follows a simple release log while it is in early development.
 - Expand provider safety and BYOK guidance.
 - Add release and maintainer workflow documentation.
 - Add core edge-case tests for queues, allowed operations, operation application, and mock providers.
-- Update CI to run on Node 24.
+- Update CI to use Node 24-compatible actions and a Node 22/24 matrix.
 
 ## 0.1.0 - 2026-06-01
 
