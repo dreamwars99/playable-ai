@@ -48,6 +48,21 @@ Useful labels are not required yet, but maintainers should still classify issues
 
 When an issue is too broad, split it into smaller issues before implementing.
 
+## Closing Issues
+
+When closing an issue after implementation, leave a short comment with:
+
+- commit hash
+- what changed
+- validation that passed
+- any known follow-up
+
+Example:
+
+```text
+Completed in abc1234. Added provider safety guidance for backend, BYOK, and local runtime modes. Verified with pnpm check, git diff --check, and CI.
+```
+
 ## PR And Commit Expectations
 
 Commits should be small and descriptive.

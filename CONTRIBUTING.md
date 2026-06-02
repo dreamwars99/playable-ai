@@ -13,6 +13,24 @@ Before changing code, read:
 3. [`docs/repository-structure.md`](./docs/repository-structure.md)
 4. [`docs/maintenance.md`](./docs/maintenance.md)
 
+## Working From Issues
+
+For feature work, public API changes, provider behavior, examples, CI changes, release work, and larger docs updates, prefer opening or using an issue first.
+
+The normal loop is:
+
+```text
+issue
+-> focused change
+-> validation
+-> commit
+-> push
+-> CI
+-> close issue with summary
+```
+
+Use the maintenance task template for docs, CI, release, testing, and maintainer workflow updates.
+
 ## Contribution Types
 
 ### Core SDK Changes

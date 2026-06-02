@@ -12,6 +12,7 @@ This project follows a simple release log while it is in early development.
 - Add release and maintainer workflow documentation.
 - Add core edge-case tests for queues, allowed operations, operation application, and mock providers.
 - Update CI to use Node 24-compatible actions and a Node 22/24 matrix.
+- Add a maintenance task issue template and issue-closing guidance.
 
 ## 0.1.0 - 2026-06-01
 
