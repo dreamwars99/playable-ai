@@ -11,6 +11,7 @@ Before changing code, read:
 1. [`README.md`](./README.md)
 2. [`AGENTS.md`](./AGENTS.md)
 3. [`docs/repository-structure.md`](./docs/repository-structure.md)
+4. [`docs/maintenance.md`](./docs/maintenance.md)
 
 ## Contribution Types
 
@@ -133,4 +134,3 @@ ci: add typecheck workflow
 ## Safety Boundaries
 
 Do not contribute code that targets real-world weapon operation, surveillance, targeting, or operational military decision-making. Fictional game balancing, benign simulations, educational examples, and productivity examples are welcome.
-

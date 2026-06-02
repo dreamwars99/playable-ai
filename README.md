@@ -289,6 +289,8 @@ This repository includes an [`AGENTS.md`](./AGENTS.md) guide for Codex, OpenCode
 ## Maintainer Notes
 
 - [`CHANGELOG.md`](./CHANGELOG.md) tracks release changes.
+- [`docs/maintenance.md`](./docs/maintenance.md) explains the maintainer workflow.
+- [`docs/release.md`](./docs/release.md) explains the release workflow.
 - [`SECURITY.md`](./SECURITY.md) explains security boundaries and vulnerability reporting.
 - [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) sets contribution expectations.
 - [`docs/codex-for-oss-application-notes.md`](./docs/codex-for-oss-application-notes.md) summarizes the project for open-source support applications.

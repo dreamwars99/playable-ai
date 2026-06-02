@@ -6,7 +6,11 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
-No unreleased changes yet.
+- Add integration lifecycle documentation.
+- Add API reference draft.
+- Expand provider safety and BYOK guidance.
+- Add release and maintainer workflow documentation.
+- Update CI to run on Node 24.
 
 ## 0.1.0 - 2026-06-01
 
