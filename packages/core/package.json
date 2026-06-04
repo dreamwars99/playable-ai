@@ -5,6 +5,22 @@
   "type": "module",
   "private": false,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamwars99/playable-ai.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/dreamwars99/playable-ai/issues"
+  },
+  "homepage": "https://github.com/dreamwars99/playable-ai/tree/main/packages/core#readme",
+  "keywords": [
+    "ai",
+    "typescript",
+    "structured-output",
+    "prompt-engineering",
+    "provider-adapter"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

@@ -6,7 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
-No unreleased changes yet.
+- Add npm publish readiness metadata, package license files, and a package dry-run checklist.
 
 ## 0.1.1 - 2026-06-02
 

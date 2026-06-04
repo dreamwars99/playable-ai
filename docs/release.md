@@ -85,6 +85,39 @@ The packages are not published to npm yet.
 
 When publishing begins, add a package publishing checklist before the first npm release. Until then, releases are GitHub source releases.
 
+## NPM Publish Readiness
+
+Before publishing packages to npm, run the package dry-run check:
+
+```bash
+pnpm pack:check
+```
+
+This command builds all workspace packages and runs `npm pack --dry-run --json` for:
+
+- `packages/core`
+- `packages/react`
+- `packages/server`
+
+Review the dry-run output before publishing. Each publishable package should include:
+
+- `dist/index.js`
+- `dist/index.d.ts`
+- `dist/index.d.ts.map`
+- `README.md`
+- `LICENSE`
+- `package.json`
+
+Also confirm:
+
+- scoped packages have `publishConfig.access` set to `public`
+- package `repository.directory` points to the package folder
+- workspace dependencies are rewritten to concrete package versions in dry-run output
+- no examples, tests, local files, screenshots, secrets, or build caches are included
+- package versions match the intended release version
+
+Do not publish from a dirty worktree. Run `pnpm check`, confirm CI is green, and create the GitHub source release first.
+
 ## Rollback
 
 For source releases, prefer a follow-up fix release over deleting published tags.
