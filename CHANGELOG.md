@@ -8,6 +8,7 @@ This project follows a simple release log while it is in early development.
 
 - Add npm publish readiness metadata, package license files, and a package dry-run checklist.
 - Add a CI package dry-run job for publish readiness checks.
+- Add a date-based maintenance log and agent guidance for updating it.
 
 ## 0.1.1 - 2026-06-02
 

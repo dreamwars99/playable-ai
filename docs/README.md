@@ -9,6 +9,7 @@ Start with:
 - [`integration.md`](./integration.md)
 - [`integration-lifecycle.md`](./integration-lifecycle.md)
 - [`maintenance.md`](./maintenance.md)
+- [`maintenance-log.md`](./maintenance-log.md)
 - [`provider-safety.md`](./provider-safety.md)
 - [`release.md`](./release.md)
 - [`repository-structure.md`](./repository-structure.md)

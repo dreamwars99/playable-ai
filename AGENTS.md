@@ -189,6 +189,32 @@ Useful commit sequence:
 
 Do not mix unrelated package scaffolding, examples, and docs rewrites in one commit when avoidable.
 
+## Maintenance Log Guidance
+
+Use `docs/maintenance-log.md` for maintainer-facing date-based updates.
+
+Update the log when a change:
+
+- adds or changes maintainer workflow
+- changes release or packaging process
+- changes CI or validation coverage
+- adds public API or provider safety behavior
+- closes a meaningful issue-driven maintenance task
+- explains why a non-obvious maintenance decision was made
+
+Do not duplicate every small commit. The log is for useful operational context, not for restating git history.
+
+Each entry should include:
+
+- date
+- short task name
+- reason
+- updated items
+- validation
+- related issue, commit, release, or follow-up
+
+Keep entries public, generic, and free of private project names, private workflow details, secrets, local paths outside this repository, or private roadmap notes.
+
 ## What Not To Copy From Private Apps
 
 Do not copy private product-specific prompts, private domain ontologies, paid workflow logic, customer data, API keys, unreleased assets, or private roadmap details into this repository.

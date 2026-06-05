@@ -20,6 +20,8 @@ issue
 
 Small documentation fixes may skip a new issue, but feature work, public API changes, provider behavior, examples, and CI updates should be issue-driven when practical.
 
+Use [`maintenance-log.md`](./maintenance-log.md) for date-based maintainer context that does not belong in release notes.
+
 ## Maintainer Review Checklist
 
 Before merging or pushing a meaningful change, check:
@@ -91,6 +93,19 @@ Also check public docs and examples for unsafe private or provider-secret conten
 
 Use focused validation for very small docs-only edits when speed matters, but run the full check before releases or package behavior changes.
 
+## Maintenance Log
+
+Update [`maintenance-log.md`](./maintenance-log.md) when a task changes maintainer workflow, release process, packaging, CI, provider safety behavior, or public API boundaries.
+
+The log should explain:
+
+- why the task mattered
+- what changed
+- what validation passed
+- related issue, commit, release, or follow-up
+
+Do not use the maintenance log as a full commit mirror. Keep `CHANGELOG.md` release-facing and keep the maintenance log maintainer-facing.
+
 ## AI Coding Agent Workflow
 
 AI-assisted maintenance is welcome, but agents should:
@@ -101,12 +116,13 @@ AI-assisted maintenance is welcome, but agents should:
 - avoid direct AI-to-state mutation patterns
 - avoid provider keys in examples
 - explain validation results
+- update `docs/maintenance-log.md` when the maintenance context matters
 - leave human-readable issue or commit summaries
 
 Good agent prompt:
 
 ```text
-Read README.md, AGENTS.md, and docs/maintenance.md.
+Read README.md, AGENTS.md, docs/maintenance.md, and docs/maintenance-log.md.
 Update the API reference for the current exports only.
 Do not add new APIs.
 Run pnpm check and git diff --check.
