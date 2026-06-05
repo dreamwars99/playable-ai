@@ -27,6 +27,28 @@ Related:
 
 ## 2026-06-06
 
+### MVP Validation Gate Across Examples
+
+Reason:
+The core candidate validator should be visible in real example flows, not only in API docs. Wiring it into every runnable example makes the first MVP loop complete: task, provider, candidate, validation, review, and host-owned apply.
+
+Updated:
+- Added `validateCandidateForTask` checks to the tactics-grid, kanban-quest, and timeline-review examples.
+- Displayed candidate validation status in each review UI.
+- Blocked example apply actions when SDK-level validation fails.
+- Updated README, integration docs, provider safety docs, examples docs, and OSS application notes to describe candidate validation as part of the lifecycle.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- `pnpm pack:check`
+- browser smoke for runnable examples
+- GitHub Actions Check
+
+Related:
+- Issue #17
+
 ### Core Candidate Validation Helper
 
 Reason:

@@ -24,6 +24,11 @@ button {
   padding: 0.72rem 1rem;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 button.secondary {
   background: #e2e8f0;
   color: #172033;
@@ -181,6 +186,27 @@ pre {
   margin: 0 0 10px;
 }
 
+.candidate .validation-ok,
+.candidate .validation-blocked,
+.validation-error {
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
+  padding: 7px 8px;
+}
+
+.candidate .validation-ok {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.candidate .validation-blocked,
+.validation-error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
 .candidate code {
   background: #ccfbf1;
   border-radius: 6px;
@@ -213,4 +239,3 @@ pre {
     grid-template-columns: 1fr;
   }
 }
-

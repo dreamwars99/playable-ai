@@ -17,6 +17,7 @@ interactive state
 -> scoped task
 -> provider adapter
 -> structured candidate
+-> candidate validation
 -> human review
 -> apply / reject / edit / lock
 ```
@@ -94,7 +95,7 @@ AI-assisted features are becoming a baseline expectation for many software produ
 Playable AI is for maintainers who want more than a chat box. It gives open-source apps a shared user-app-AI protocol:
 
 ```text
-snapshot -> task -> provider -> candidate -> human review -> app-owned apply
+snapshot -> task -> provider -> candidate -> validation -> human review -> app-owned apply
 ```
 
 That pattern helps open-source projects:
@@ -108,7 +109,7 @@ That pattern helps open-source projects:
 
 ## Project Status
 
-Playable AI is in early public development. The core SDK and three runnable examples exist today.
+Playable AI is in early public development. The core SDK and three runnable examples exist today. Each example now demonstrates the full MVP loop: task creation, mock provider execution, candidate validation, human review, and host-owned apply.
 
 Current focus:
 
@@ -161,7 +162,7 @@ npm install playable-ai
 The core API is intentionally small:
 
 ```ts
-import { createTask, createCandidate } from "playable-ai";
+import { createTask, createCandidate, validateCandidateForTask } from "playable-ai";
 
 const task = createTask({
   id: "board.group-tasks",
@@ -192,6 +193,12 @@ const candidate = createCandidate({
   ],
   applyPolicy: "review_required"
 });
+
+const validation = validateCandidateForTask(task, candidate);
+
+if (validation.valid) {
+  // The host app can show the candidate for review or map it to app-owned commands.
+}
 ```
 
 See [`docs/concepts.md`](./docs/concepts.md), [`docs/api-reference.md`](./docs/api-reference.md), [`docs/integration.md`](./docs/integration.md), and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) for the integration model.
@@ -227,6 +234,8 @@ Adapters can target:
 - local sLLM endpoints
 - self-hosted model servers
 - mocked or deterministic development providers
+
+Provider output should be parsed into candidates and validated before the host app applies any operation.
 
 Provider keys should stay outside browser bundles. Apps using Playable AI should route sensitive model calls through their own secure backend, local service, or explicitly user-controlled runtime.
 

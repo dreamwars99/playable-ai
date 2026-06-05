@@ -103,6 +103,7 @@ The app backend should still own auth, rate limits, logging policy, output valid
 - Do not ask users to paste remote API keys into public examples.
 - Do not treat raw model text as trusted app state.
 - Validate or normalize model output into candidates.
+- Run `validateCandidateForTask` or equivalent host validation before applying candidates.
 - Keep human review between candidates and app mutation.
 - Let host apps decide what gets applied.
 - Prefer mock providers for examples unless the example is explicitly local-only.

@@ -10,6 +10,7 @@ host state
 -> task pack
 -> provider boundary
 -> candidate parser
+-> candidate validation
 -> review queue
 -> host-owned apply
 ```
@@ -151,7 +152,32 @@ const candidate = createCandidate({
 });
 ```
 
-## 6. Review Queue
+## 6. Candidate Validation
+
+Treat candidates as untrusted proposed commands until they pass SDK-level and host-app validation.
+
+```ts
+import { validateCandidateForTask } from "playable-ai";
+
+const validation = validateCandidateForTask(task, candidate);
+
+if (!validation.valid) {
+  throw new Error(validation.issues.map((issue) => issue.message).join(" "));
+}
+```
+
+`validateCandidateForTask` checks the generic SDK contract:
+
+- candidate `taskId` matches the task
+- candidate `operations` is an array
+- each operation has a string `type`
+- optional `targetId` values are strings
+- operation `payload` values are JSON objects
+- operation types are allowed by the task, when an allow list exists
+
+Real apps should still validate domain rules before applying operations. For example, a board app should check whether a card exists, a user has permission, a lock is active, or a payload value is allowed by the current workspace.
+
+## 7. Review Queue
 
 Candidates should wait for user or maintainer review.
 
@@ -171,7 +197,7 @@ Common actions:
 - lock
 - rerun
 
-## 7. Host-Owned Apply
+## 8. Host-Owned Apply
 
 Playable AI does not know how to mutate your app. The host app maps approved operations to its own commands.
 
@@ -196,9 +222,9 @@ function applyBoardOperation(state: BoardState, operation: PlayableOperation): B
 const nextState = applyCandidateOperations(boardState, candidate, applyBoardOperation);
 ```
 
-Real apps should also validate operation payloads before applying them. Treat candidate operations as untrusted proposed commands until the app accepts them.
+Run generic candidate validation and host-specific payload validation before applying operations. Treat candidate operations as untrusted proposed commands until the app accepts them.
 
-## 8. What Changes Across Apps
+## 9. What Changes Across Apps
 
 Every app changes these pieces:
 
@@ -206,6 +232,7 @@ Every app changes these pieces:
 - task pack
 - provider adapter or backend endpoint
 - candidate parser
+- candidate validation policy
 - operation mapper
 - review UI
 
@@ -220,6 +247,7 @@ This is why the same SDK can support a board, game editor, timeline, map, graph,
 - [ ] Write constraints that protect user-owned state.
 - [ ] Decide where the provider call runs.
 - [ ] Parse provider output into candidates.
+- [ ] Validate candidates against the task before review or apply.
 - [ ] Show candidates before applying anything.
 - [ ] Map approved operations to host app commands.
 - [ ] Test invalid operation types and rejected candidates.

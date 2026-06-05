@@ -23,7 +23,7 @@ The project aims to define a small open protocol between users, apps, and AI sys
 AI-assisted features are becoming a baseline expectation for many software products. Open-source apps are adding AI to editors, boards, games, maps, dashboards, simulations, and local-first tools. Many of them need the same safety pattern:
 
 ```text
-snapshot -> task -> provider -> candidate -> human review -> app-owned apply
+snapshot -> task -> provider -> candidate -> validation -> human review -> app-owned apply
 ```
 
 Playable AI makes that pattern reusable. It helps maintainers add AI workflows while keeping provider secrets out of browser bundles, making model output reviewable, and preserving host-app ownership of state changes.
@@ -31,9 +31,9 @@ Playable AI makes that pattern reusable. It helps maintainers add AI workflows w
 ## Current Evidence
 
 - MIT-licensed public repository.
-- Core TypeScript SDK with task, provider, candidate, queue, and apply primitives.
+- Core TypeScript SDK with task, provider, candidate, validation, queue, and apply primitives.
 - React hooks and server-side provider helpers.
-- Two runnable React examples.
+- Three runnable React examples.
 - CI for typecheck, tests, and builds.
 - Documentation for concepts, integration, provider safety, repository structure, AI-agent customization, and contribution boundaries.
 - Issue templates and security policy for ongoing maintenance.
@@ -41,7 +41,7 @@ Playable AI makes that pattern reusable. It helps maintainers add AI workflows w
 
 ## Suggested 500-Character Answer
 
-Playable AI is an early MIT-licensed SDK for a growing OSS need: safely adding AI to stateful apps. As AI features become common in editors, games, boards, and dashboards, apps need more than chat boxes. Playable AI defines a reusable user-app-AI protocol: scoped snapshots, provider adapters, structured candidates, and human-reviewed apply.
+Playable AI is an early MIT-licensed SDK for a growing OSS need: safely adding AI to stateful apps. As AI features become common in editors, games, boards, and dashboards, apps need more than chat boxes. Playable AI defines a reusable user-app-AI protocol: scoped snapshots, provider adapters, validated candidates, and human-reviewed apply.
 
 ## API Credits Usage
 
@@ -49,4 +49,4 @@ Use API credits to build and test OpenAI-compatible provider adapters, structure
 
 ## Anything Else
 
-This is a new project without stars or downloads yet, but it targets a broad ecosystem problem: how open-source apps connect AI to user-owned state safely. The repo already has a core SDK, React helpers, server helpers, examples, CI, security docs, issue templates, roadmap issues, and an active release plan.
+This is a new project without stars or downloads yet, but it targets a broad ecosystem problem: how open-source apps connect AI to user-owned state safely. The repo already has a core SDK, React helpers, server helpers, three examples, CI, security docs, issue templates, roadmap issues, and an active release plan.

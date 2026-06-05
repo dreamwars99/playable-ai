@@ -5,6 +5,7 @@ import {
   applyCandidateOperations,
   createCandidate,
   createMockProvider,
+  validateCandidateForTask,
   type PlayableCandidate,
   type PlayableOperation,
   type PlayableTaskPack
@@ -134,24 +135,38 @@ const mockProvider = createMockProvider({
 
 function App() {
   const [state, setState] = useState<TacticsState>(initialState);
+  const [validationMessage, setValidationMessage] = useState<string>();
   const queueController = useCandidateQueue<TacticsOperation>();
 
   const task = usePlayableTaskPack(tacticsTaskPack, state, tacticsScope, [state]);
   const providerRunner = usePlayableProviderRunner(mockProvider, {
-    onCandidates: queueController.enqueue
+    onCandidates: (candidates) => {
+      setValidationMessage(undefined);
+      queueController.enqueue(candidates);
+    }
   });
 
   const runAnalysis = async () => {
+    setValidationMessage(undefined);
     await providerRunner.run(task);
   };
 
   const applyCandidate = (candidate: PlayableCandidate<TacticsOperation>) => {
+    const validation = validateCandidateForTask(task, candidate);
+
+    if (!validation.valid) {
+      setValidationMessage(validation.issues.map((issue) => issue.message).join(" "));
+      return;
+    }
+
     setState((current) => applyCandidateOperations(current, candidate, applyTacticsOperation));
     queueController.accept(candidate.id);
+    setValidationMessage(undefined);
   };
 
   const ignore = (candidateId: string) => {
     queueController.ignore(candidateId);
+    setValidationMessage(undefined);
   };
 
   return (
@@ -185,26 +200,36 @@ function App() {
         <div className="side-panel">
           <h2>Review candidates</h2>
           {providerRunner.error ? <p className="empty">Provider error: {providerRunner.error.message}</p> : null}
+          {validationMessage ? <p className="validation-error">{validationMessage}</p> : null}
           {queueController.queue.pending.length === 0 ? (
             <p className="empty">Run analysis to generate mock candidates.</p>
           ) : (
             <div className="candidate-list">
-              {queueController.queue.pending.map((candidate) => (
-                <article className="candidate-card" key={candidate.id}>
-                  <span>{Math.round((candidate.confidence ?? 0) * 100)}% confidence</span>
-                  <h3>{candidate.title}</h3>
-                  <p>{candidate.summary}</p>
-                  <code>{candidate.operations.map((operation) => operation.type).join(", ")}</code>
-                  <div className="candidate-actions">
-                    <button type="button" onClick={() => applyCandidate(candidate)}>
-                      Apply
-                    </button>
-                    <button type="button" className="secondary" onClick={() => ignore(candidate.id)}>
-                      Ignore
-                    </button>
-                  </div>
-                </article>
-              ))}
+              {queueController.queue.pending.map((candidate) => {
+                const validation = validateCandidateForTask(task, candidate);
+
+                return (
+                  <article className="candidate-card" key={candidate.id}>
+                    <span>{Math.round((candidate.confidence ?? 0) * 100)}% confidence</span>
+                    <h3>{candidate.title}</h3>
+                    <p>{candidate.summary}</p>
+                    <code>{candidate.operations.map((operation) => operation.type).join(", ")}</code>
+                    <p className={validation.valid ? "validation-ok" : "validation-blocked"}>
+                      {validation.valid
+                        ? "Validation passed before apply."
+                        : validation.issues.map((issue) => issue.message).join(" ")}
+                    </p>
+                    <div className="candidate-actions">
+                      <button type="button" disabled={!validation.valid} onClick={() => applyCandidate(candidate)}>
+                        Apply
+                      </button>
+                      <button type="button" className="secondary" onClick={() => ignore(candidate.id)}>
+                        Ignore
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           )}
         </div>

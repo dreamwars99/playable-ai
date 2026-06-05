@@ -10,6 +10,8 @@ examples/<example-name>/
 
 Examples should be isolated and runnable with `pnpm`.
 
+All current examples use mock providers and validate candidates before applying operations to local app state.
+
 Current examples:
 
 - `tactics-grid`: fictional 6x6 game/editor balancing demo

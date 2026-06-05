@@ -57,7 +57,24 @@ const result = await provider.run({ task });
 
 Use the same shape for local or self-hosted chat-completions-style endpoints by changing `endpoint` and `model`.
 
-## 4. Operation Mapper
+## 4. Candidate Validation
+
+Validate candidates before any host-owned apply step.
+
+```ts
+import { validateCandidateForTask } from "playable-ai";
+
+const validation = validateCandidateForTask(task, candidate);
+
+if (!validation.valid) {
+  console.warn(validation.issues);
+  return;
+}
+```
+
+This catches task mismatches, malformed operation collections, missing operation types, non-object payloads, and operation types that are not in the task allow list. Your app should still enforce permissions, locks, quotas, ownership, and domain-specific payload rules.
+
+## 5. Operation Mapper
 
 Map candidate operations to your app commands.
 
@@ -71,7 +88,7 @@ function applyOperation(state: BoardState, operation: PlayableOperation): BoardS
 }
 ```
 
-## 5. Review UI
+## 6. Review UI
 
 Show candidates before changing the app.
 
@@ -92,6 +109,7 @@ host state
 -> task pack
 -> provider adapter
 -> candidates
+-> candidate validation
 -> review UI
 -> host-owned operation mapper
 ```
