@@ -23,7 +23,8 @@ import {
   createTask,
   createTaskFromPack,
   enqueueCandidates,
-  ignoreCandidate
+  ignoreCandidate,
+  validateCandidateForTask
 } from "playable-ai";
 ```
 
@@ -235,6 +236,46 @@ if (blockedTypes.length > 0) {
   // Reject or ask the provider to regenerate.
 }
 ```
+
+### `validateCandidateForTask`
+
+Validates a candidate against a task before host-owned apply.
+
+```ts
+const result = validateCandidateForTask(task, candidate);
+
+if (!result.valid) {
+  console.warn(result.issues);
+}
+```
+
+Validation issues use this shape:
+
+```ts
+type PlayableCandidateValidationIssue = {
+  code:
+    | "candidate_task_mismatch"
+    | "candidate_operations_invalid"
+    | "operation_type_invalid"
+    | "operation_target_invalid"
+    | "operation_payload_invalid"
+    | "operation_not_allowed";
+  message: string;
+  operationIndex?: number;
+  operationType?: string;
+};
+```
+
+The helper checks:
+
+- candidate `taskId` matches the task id
+- `operations` is an array
+- each operation has a string `type`
+- optional `targetId` values are strings
+- operation `payload` values are JSON objects
+- operation types are included in `task.allowedOperations`, when an allow list exists
+
+It does not replace host-app business rules. Apps should still enforce permissions, ownership, locks, quotas, and domain-specific validation before applying operations.
 
 ## React Package
 

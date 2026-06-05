@@ -27,6 +27,29 @@ Related:
 
 ## 2026-06-06
 
+### Core Candidate Validation Helper
+
+Reason:
+Host apps need a small SDK-level guard before applying AI or mock-provider candidates. Allowed-operation checks were available, but apps also benefit from a structured result that reports task mismatches and invalid operation shapes.
+
+Updated:
+- Added `validateCandidateForTask` to the core package.
+- Added validation issue/result types.
+- Added tests for valid candidates, task mismatches, disallowed operations, invalid operation shapes, invalid target ids, invalid payloads, and invalid operations collections.
+- Documented the helper in the API reference.
+
+Validation:
+- `pnpm --filter playable-ai test`
+- `pnpm --filter playable-ai typecheck`
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- `pnpm pack:check`
+- GitHub Actions Check
+
+Related:
+- Issue #16
+
 ### Provider Parser Hardening
 
 Reason:

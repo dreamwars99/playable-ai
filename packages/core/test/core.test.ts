@@ -12,6 +12,8 @@ import {
   createTaskFromPack,
   enqueueCandidates,
   ignoreCandidate,
+  validateCandidateForTask,
+  type PlayableCandidate,
   type PlayableOperation
 } from "../src/index.js";
 
@@ -173,6 +175,158 @@ test("allows any operation when a task has no allow list", () => {
   });
 
   assert.deepEqual(assertAllowedOperations(task, candidate), []);
+});
+
+test("validates candidates before host-owned apply", () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: {},
+    allowedOperations: ["card.move"]
+  });
+
+  const candidate = createCandidate({
+    taskId: "board.review",
+    status: "suggested",
+    applyPolicy: "review_required",
+    operations: [
+      {
+        type: "card.move",
+        targetId: "card-1",
+        payload: { column: "doing" }
+      }
+    ]
+  });
+
+  assert.deepEqual(validateCandidateForTask(task, candidate), {
+    valid: true,
+    issues: []
+  });
+});
+
+test("reports task mismatches and disallowed operations", () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: {},
+    allowedOperations: ["card.move"]
+  });
+
+  const candidate = createCandidate({
+    taskId: "other.task",
+    status: "suggested",
+    applyPolicy: "review_required",
+    operations: [
+      {
+        type: "card.delete",
+        targetId: "card-1",
+        payload: {}
+      }
+    ]
+  });
+
+  assert.deepEqual(validateCandidateForTask(task, candidate), {
+    valid: false,
+    issues: [
+      {
+        code: "candidate_task_mismatch",
+        message: 'Candidate taskId must match task id "board.review".'
+      },
+      {
+        code: "operation_not_allowed",
+        message: 'Operation type "card.delete" is not allowed by task "board.review".',
+        operationIndex: 0,
+        operationType: "card.delete"
+      }
+    ]
+  });
+});
+
+test("reports invalid runtime operation shapes", () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: {},
+    allowedOperations: ["card.move"]
+  });
+
+  const candidate = {
+    id: "candidate-a",
+    taskId: "board.review",
+    status: "suggested",
+    applyPolicy: "review_required",
+    createdAt: "2026-06-06T00:00:00.000Z",
+    operations: [
+      {
+        type: "card.move",
+        targetId: 123,
+        payload: "doing"
+      },
+      {
+        payload: {}
+      },
+      {
+        type: "card.move",
+        payload: new Date("2026-06-06T00:00:00.000Z")
+      }
+    ]
+  } as unknown as PlayableCandidate;
+
+  assert.deepEqual(validateCandidateForTask(task, candidate), {
+    valid: false,
+    issues: [
+      {
+        code: "operation_target_invalid",
+        message: "Operation 0 targetId must be a string when provided.",
+        operationIndex: 0,
+        operationType: "card.move"
+      },
+      {
+        code: "operation_payload_invalid",
+        message: "Operation 0 payload must be a JSON object.",
+        operationIndex: 0,
+        operationType: "card.move"
+      },
+      {
+        code: "operation_type_invalid",
+        message: "Operation 1 must include a string type.",
+        operationIndex: 1
+      },
+      {
+        code: "operation_payload_invalid",
+        message: "Operation 2 payload must be a JSON object.",
+        operationIndex: 2,
+        operationType: "card.move"
+      }
+    ]
+  });
+});
+
+test("reports invalid candidate operations collections", () => {
+  const task = createTask({
+    id: "board.review",
+    scope: { app: "test", surface: "board" },
+    snapshot: {}
+  });
+
+  const candidate = {
+    id: "candidate-a",
+    taskId: "board.review",
+    status: "suggested",
+    applyPolicy: "review_required",
+    createdAt: "2026-06-06T00:00:00.000Z",
+    operations: {}
+  } as unknown as PlayableCandidate;
+
+  assert.deepEqual(validateCandidateForTask(task, candidate), {
+    valid: false,
+    issues: [
+      {
+        code: "candidate_operations_invalid",
+        message: "Candidate operations must be an array."
+      }
+    ]
+  });
 });
 
 test("runs mock providers against tasks", async () => {

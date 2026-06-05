@@ -82,6 +82,26 @@ export type CandidateQueue<TOperation extends PlayableOperation = PlayableOperat
   ignored: PlayableCandidate<TOperation>[];
 };
 
+export type PlayableCandidateValidationIssueCode =
+  | "candidate_task_mismatch"
+  | "candidate_operations_invalid"
+  | "operation_type_invalid"
+  | "operation_target_invalid"
+  | "operation_payload_invalid"
+  | "operation_not_allowed";
+
+export type PlayableCandidateValidationIssue = {
+  code: PlayableCandidateValidationIssueCode;
+  message: string;
+  operationIndex?: number;
+  operationType?: string;
+};
+
+export type PlayableCandidateValidationResult = {
+  valid: boolean;
+  issues: PlayableCandidateValidationIssue[];
+};
+
 export function createTask<TSnapshot extends JsonObject>(
   input: Omit<PlayableTask<TSnapshot>, "createdAt"> & { createdAt?: string }
 ): PlayableTask<TSnapshot> {
@@ -209,7 +229,108 @@ export function assertAllowedOperations(task: PlayableTask, candidate: PlayableC
     .map((operation) => operation.type);
 }
 
+export function validateCandidateForTask(
+  task: PlayableTask,
+  candidate: PlayableCandidate
+): PlayableCandidateValidationResult {
+  const issues: PlayableCandidateValidationIssue[] = [];
+  const candidateLike = candidate as unknown as {
+    taskId?: unknown;
+    operations?: unknown;
+  };
+
+  if (candidateLike.taskId !== task.id) {
+    issues.push({
+      code: "candidate_task_mismatch",
+      message: `Candidate taskId must match task id "${task.id}".`
+    });
+  }
+
+  if (!Array.isArray(candidateLike.operations)) {
+    issues.push({
+      code: "candidate_operations_invalid",
+      message: "Candidate operations must be an array."
+    });
+
+    return {
+      valid: false,
+      issues
+    };
+  }
+
+  const allowedOperations = task.allowedOperations?.length ? new Set(task.allowedOperations) : undefined;
+
+  candidateLike.operations.forEach((operation, operationIndex) => {
+    if (!isPlainObject(operation) || typeof operation.type !== "string") {
+      issues.push({
+        code: "operation_type_invalid",
+        message: `Operation ${operationIndex} must include a string type.`,
+        operationIndex
+      });
+
+      return;
+    }
+
+    if (operation.targetId !== undefined && typeof operation.targetId !== "string") {
+      issues.push({
+        code: "operation_target_invalid",
+        message: `Operation ${operationIndex} targetId must be a string when provided.`,
+        operationIndex,
+        operationType: operation.type
+      });
+    }
+
+    if (!isJsonObject(operation.payload)) {
+      issues.push({
+        code: "operation_payload_invalid",
+        message: `Operation ${operationIndex} payload must be a JSON object.`,
+        operationIndex,
+        operationType: operation.type
+      });
+    }
+
+    if (allowedOperations && !allowedOperations.has(operation.type)) {
+      issues.push({
+        code: "operation_not_allowed",
+        message: `Operation type "${operation.type}" is not allowed by task "${task.id}".`,
+        operationIndex,
+        operationType: operation.type
+      });
+    }
+  });
+
+  return {
+    valid: issues.length === 0,
+    issues
+  };
+}
+
 function createId(prefix: string): string {
   return `${prefix}_${Math.random().toString(36).slice(2, 10)}`;
 }
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+
+  return prototype === Object.prototype || prototype === null;
+}
+
+function isJsonObject(value: unknown): value is JsonObject {
+  return isPlainObject(value) && Object.values(value).every(isJsonValue);
+}
+
+function isJsonValue(value: unknown): value is JsonValue {
+  if (value === null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return true;
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(isJsonValue);
+  }
+
+  return isJsonObject(value);
+}

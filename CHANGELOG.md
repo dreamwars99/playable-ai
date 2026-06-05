@@ -10,6 +10,7 @@ This project follows a simple release log while it is in early development.
 - Add a CI package dry-run job for publish readiness checks.
 - Add a date-based maintenance log and agent guidance for updating it.
 - Add provider parser failure and normalization tests.
+- Add a core candidate validation helper.
 
 ## 0.1.1 - 2026-06-02
 
