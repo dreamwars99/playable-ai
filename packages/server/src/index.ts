@@ -149,7 +149,14 @@ export function parseCandidateJson<TOperation extends PlayableOperation>(
   content: string,
   task: Pick<PlayableTask, "id">
 ): PlayableCandidate<TOperation>[] {
-  const parsed = JSON.parse(content) as unknown;
+  let parsed: unknown;
+
+  try {
+    parsed = JSON.parse(content) as unknown;
+  } catch (error) {
+    throw new Error(`Provider response must be valid JSON: ${getErrorMessage(error)}`);
+  }
+
   const rawCandidates = Array.isArray(parsed)
     ? parsed
     : isObject(parsed) && Array.isArray(parsed.candidates)
@@ -260,10 +267,12 @@ function normalizeEvidence(evidence: unknown): PlayableCandidate["evidence"] {
       return [];
     }
 
+    const label = optionalString(item.label);
+
     return [
       {
         sourceId: item.sourceId,
-        label: optionalString(item.label),
+        ...(label === undefined ? {} : { label }),
         reason: item.reason
       }
     ];
@@ -296,6 +305,10 @@ function optionalNumber(value: unknown): number | undefined {
 
 function optionalJsonObject(value: unknown): JsonObject | undefined {
   return isObject(value) ? value : undefined;
+}
+
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 function isObject(value: unknown): value is JsonObject {

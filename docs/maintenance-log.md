@@ -27,6 +27,28 @@ Related:
 
 ## 2026-06-06
 
+### Provider Parser Hardening
+
+Reason:
+Model/provider output is one of the highest-risk boundaries in Playable AI. The server adapter should fail explicitly for malformed output and preserve safe defaults when optional model fields are invalid.
+
+Updated:
+- Added provider parser tests for malformed JSON.
+- Added tests for missing `candidates` arrays and missing `operations` arrays.
+- Added tests for invalid operation payloads.
+- Added tests for raw candidate arrays and default candidate normalization.
+- Wrapped malformed JSON parse failures with a provider-specific error message.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- `pnpm pack:check`
+- GitHub Actions Check
+
+Related:
+- Issue #15
+
 ### Maintenance Log And Agent Guidance
 
 Reason:

@@ -26,8 +26,119 @@ test("parses provider candidates from JSON content", () => {
 
   assert.equal(candidates.length, 1);
   assert.equal(candidates[0]?.taskId, "board.review");
+  assert.equal(candidates[0]?.status, "suggested");
   assert.equal(candidates[0]?.applyPolicy, "review_required");
   assert.equal(candidates[0]?.operations[0]?.type, "card.move");
+});
+
+test("parses provider candidates from a raw JSON array", () => {
+  const candidates = parseCandidateJson(
+    JSON.stringify([
+      {
+        title: "Create card",
+        operations: [
+          {
+            type: "card.create",
+            payload: { title: "Review release checklist" }
+          }
+        ]
+      }
+    ]),
+    { id: "board.review" }
+  );
+
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0]?.taskId, "board.review");
+  assert.equal(candidates[0]?.operations[0]?.type, "card.create");
+});
+
+test("rejects malformed provider JSON", () => {
+  assert.throws(
+    () => parseCandidateJson("{ not json", { id: "board.review" }),
+    /Provider response must be valid JSON/
+  );
+});
+
+test("rejects provider JSON without a candidates array", () => {
+  assert.throws(
+    () => parseCandidateJson(JSON.stringify({ result: [] }), { id: "board.review" }),
+    /Provider response must be a JSON array or an object with a candidates array/
+  );
+});
+
+test("rejects candidates without operations arrays", () => {
+  assert.throws(
+    () =>
+      parseCandidateJson(
+        JSON.stringify({
+          candidates: [
+            {
+              title: "Move card"
+            }
+          ]
+        }),
+        { id: "board.review" }
+      ),
+    /Candidate at index 0 must include an operations array/
+  );
+});
+
+test("rejects operations without JSON object payloads", () => {
+  assert.throws(
+    () =>
+      parseCandidateJson(
+        JSON.stringify({
+          candidates: [
+            {
+              operations: [
+                {
+                  type: "card.move",
+                  targetId: "card-1",
+                  payload: "doing"
+                }
+              ]
+            }
+          ]
+        }),
+        { id: "board.review" }
+      ),
+    /Operation 0 in candidate 0 must include type and JSON object payload/
+  );
+});
+
+test("normalizes invalid candidate fields to safe defaults", () => {
+  const candidates = parseCandidateJson(
+    JSON.stringify({
+      candidates: [
+        {
+          status: "unknown",
+          applyPolicy: "write_directly",
+          confidence: Number.NaN,
+          evidence: [
+            { sourceId: "card-1", reason: "Mentions blocked work." },
+            { sourceId: 42, reason: "Invalid source id." },
+            { sourceId: "card-2" }
+          ],
+          metadata: { provider: "test" },
+          operations: [
+            {
+              type: "card.move",
+              targetId: 123,
+              payload: { column: "doing" }
+            }
+          ]
+        }
+      ]
+    }),
+    { id: "board.review" }
+  );
+
+  assert.equal(candidates[0]?.status, "suggested");
+  assert.equal(candidates[0]?.applyPolicy, "review_required");
+  assert.equal(candidates[0]?.confidence, undefined);
+  assert.deepEqual(candidates[0]?.evidence, [{ sourceId: "card-1", reason: "Mentions blocked work." }]);
+  assert.deepEqual(candidates[0]?.metadata, { provider: "test" });
+  assert.equal(candidates[0]?.operations[0]?.targetId, undefined);
 });
 
 test("runs an OpenAI-compatible provider with injectable fetch", async () => {
@@ -92,4 +203,3 @@ test("runs an OpenAI-compatible provider with injectable fetch", async () => {
   assert.equal(result.candidates[0]?.operations[0]?.type, "card.create");
   assert.match(JSON.stringify(requestBody), /board\.review/);
 });
-
