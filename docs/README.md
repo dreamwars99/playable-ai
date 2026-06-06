@@ -13,6 +13,7 @@ Start with:
 - [`provider-safety.md`](./provider-safety.md)
 - [`release.md`](./release.md)
 - [`repository-structure.md`](./repository-structure.md)
+- [`roadmap.md`](./roadmap.md)
 - [`examples/timeline-review-design.md`](./examples/timeline-review-design.md)
 - [`codex-for-oss-application-notes.md`](./codex-for-oss-application-notes.md)
 

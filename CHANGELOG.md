@@ -6,6 +6,8 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Add a public roadmap and improve the repository entry-point quickstart.
+
 ## 0.2.0 - 2026-06-06
 
 - Add npm publish readiness metadata, package license files, and a package dry-run checklist.

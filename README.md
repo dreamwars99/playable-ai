@@ -10,6 +10,35 @@ Playable AI is an open-source TypeScript toolkit for building applications where
 
 It aims to define a small open protocol between users, apps, and AI systems: apps expose scoped snapshots, AI returns structured candidates, and users stay in control of what gets applied.
 
+## Quickstart
+
+Run the repository locally:
+
+```bash
+git clone https://github.com/dreamwars99/playable-ai.git
+cd playable-ai
+corepack enable
+pnpm install
+pnpm check
+```
+
+Run an example app:
+
+```bash
+pnpm --filter @playable-ai/example-kanban-quest dev
+```
+
+Then open the local Vite URL, generate mock candidates, inspect the task JSON, and apply a validated candidate.
+
+## At A Glance
+
+- **Status:** early public SDK, source release `v0.2.0`
+- **Core loop:** `snapshot -> task -> provider -> candidate -> validation -> review -> app-owned apply`
+- **Packages:** framework-neutral core, optional React hooks, optional server/provider helpers
+- **Examples:** tactics grid, kanban board, timeline review
+- **Provider stance:** mock examples by default; remote provider secrets stay out of browser bundles
+- **Roadmap:** see [`docs/roadmap.md`](./docs/roadmap.md)
+
 The core idea is simple:
 
 ```text
@@ -133,17 +162,9 @@ docs/*           public documentation
 
 Example apps should stay inside `examples/<example-name>` so contributors can add demos without creating conflicts in the core SDK. See [`docs/repository-structure.md`](./docs/repository-structure.md) and [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
-## Installation
+## Package Installation
 
-The package is not published to npm yet. For now, use the repository directly:
-
-```bash
-git clone https://github.com/dreamwars99/playable-ai.git
-cd playable-ai
-corepack enable
-pnpm install
-pnpm check
-```
+The package is not published to npm yet. For now, use the repository directly through the quickstart above.
 
 After the first npm release, the intended install path will be:
 
@@ -300,6 +321,7 @@ This repository includes an [`AGENTS.md`](./AGENTS.md) guide for Codex, OpenCode
 - [`CHANGELOG.md`](./CHANGELOG.md) tracks release changes.
 - [`docs/maintenance.md`](./docs/maintenance.md) explains the maintainer workflow.
 - [`docs/release.md`](./docs/release.md) explains the release workflow.
+- [`docs/roadmap.md`](./docs/roadmap.md) explains the public roadmap.
 - [`SECURITY.md`](./SECURITY.md) explains security boundaries and vulnerability reporting.
 - [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) sets contribution expectations.
 - [`docs/codex-for-oss-application-notes.md`](./docs/codex-for-oss-application-notes.md) summarizes the project for open-source support applications.

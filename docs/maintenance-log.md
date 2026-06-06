@@ -27,6 +27,27 @@ Related:
 
 ## 2026-06-06
 
+### Public Repository Entry Point Polish
+
+Reason:
+After the `v0.2.0` source release, new visitors need a faster way to understand what the repository does, how to run it, and where the project is headed. The entry point should make the early OSS status clear without overstating adoption.
+
+Updated:
+- Added a README quickstart near the top of the repository.
+- Added an at-a-glance summary for status, package shape, examples, provider stance, and roadmap.
+- Added a public roadmap document.
+- Linked the roadmap from the docs index and maintainer notes.
+- Refreshed GitHub repository description and topics.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #19
+
 ### v0.2.0 MVP Validation Source Release
 
 Reason:
