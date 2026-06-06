@@ -27,6 +27,28 @@ Related:
 
 ## 2026-06-06
 
+### v0.2.0 MVP Validation Source Release
+
+Reason:
+The MVP lifecycle now exists across the core SDK, docs, provider safety guidance, and all runnable examples. A source release gives maintainers and evaluators a stable reference point for the completed task, provider, candidate, validation, review, and host-owned apply loop.
+
+Updated:
+- Prepared `v0.2.0`.
+- Moved `CHANGELOG.md` Unreleased entries into `0.2.0`.
+- Updated package and example versions to `0.2.0`.
+- Prepared the annotated `v0.2.0` tag and GitHub source release.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- `pnpm pack:check`
+- GitHub Actions Check
+
+Related:
+- Issue #18
+- Release `v0.2.0`
+
 ### MVP Validation Gate Across Examples
 
 Reason:

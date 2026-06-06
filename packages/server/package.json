@@ -1,6 +1,6 @@
 {
   "name": "@playable-ai/server",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Server-side provider helpers for Playable AI workflows.",
   "type": "module",
   "private": false,
