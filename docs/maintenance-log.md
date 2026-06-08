@@ -25,6 +25,29 @@ Related:
 - Commit `...`
 ```
 
+## 2026-06-08
+
+### Contributor-Ready Issue Backlog
+
+Reason:
+After the public entry-point polish, the repository needed a small set of well-scoped issues that map to the roadmap and show how contributors can help without touching core internals first.
+
+Updated:
+- Added area labels for docs, examples, validation, provider work, and maintenance work.
+- Opened five contributor-ready issues with motivation, suggested files, scope, and acceptance criteria.
+- Linked the tracked near-term issues from the public roadmap.
+- Kept the backlog focused on docs, examples, validation patterns, provider guidance, and smoke-check design.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #20
+- Issues #21, #22, #23, #24, #25
+
 ## 2026-06-06
 
 ### Public Repository Entry Point Polish

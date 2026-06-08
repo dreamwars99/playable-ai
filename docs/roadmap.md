@@ -63,6 +63,18 @@ The examples already build in CI. A future improvement is a lightweight smoke ch
 
 Open small, well-scoped issues for docs, examples, validation patterns, and provider adapter tests. Contributors should be able to improve examples without touching core package internals.
 
+## Tracked Near-Term Issues
+
+The first contributor-ready backlog is intentionally small and maps to the priorities above:
+
+- Task pack templates: [#24](https://github.com/dreamwars99/playable-ai/issues/24)
+- Host payload validation patterns: [#21](https://github.com/dreamwars99/playable-ai/issues/21)
+- Local provider integration guide: [#25](https://github.com/dreamwars99/playable-ai/issues/25)
+- Example smoke check design: [#23](https://github.com/dreamwars99/playable-ai/issues/23)
+- Choose-your-app-shape quickstart: [#22](https://github.com/dreamwars99/playable-ai/issues/22)
+
+These issues are meant to be small enough for focused contributions while still improving the SDK's public integration story.
+
 ## Longer-Term Ideas
 
 - package publishing checklist for the first npm release
