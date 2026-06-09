@@ -6,6 +6,7 @@ Start with:
 
 - [`concepts.md`](./concepts.md)
 - [`api-reference.md`](./api-reference.md)
+- [`task-pack-template.md`](./task-pack-template.md)
 - [`integration.md`](./integration.md)
 - [`integration-lifecycle.md`](./integration-lifecycle.md)
 - [`maintenance.md`](./maintenance.md)

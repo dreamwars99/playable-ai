@@ -33,6 +33,8 @@ Add copyable task-pack templates for common app shapes:
 
 The goal is to help maintainers adapt Playable AI without guessing where snapshots, allowed operations, validation, and apply mapping should live.
 
+The first generic template is available in [`task-pack-template.md`](./task-pack-template.md). Future templates can split into app-specific variants when the examples need more depth.
+
 ### 2. Host Payload Validation Patterns
 
 `validateCandidateForTask` checks the generic SDK contract. Host apps still need domain validation.

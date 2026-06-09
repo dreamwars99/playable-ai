@@ -37,6 +37,7 @@ Then open the local Vite URL, generate mock candidates, inspect the task JSON, a
 - **Packages:** framework-neutral core, optional React hooks, optional server/provider helpers
 - **Examples:** tactics grid, kanban board, timeline review
 - **Provider stance:** mock examples by default; remote provider secrets stay out of browser bundles
+- **Template:** start with [`docs/task-pack-template.md`](./docs/task-pack-template.md)
 - **Roadmap:** see [`docs/roadmap.md`](./docs/roadmap.md)
 
 The core idea is simple:
@@ -222,7 +223,7 @@ if (validation.valid) {
 }
 ```
 
-See [`docs/concepts.md`](./docs/concepts.md), [`docs/api-reference.md`](./docs/api-reference.md), [`docs/integration.md`](./docs/integration.md), and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) for the integration model.
+See [`docs/task-pack-template.md`](./docs/task-pack-template.md), [`docs/concepts.md`](./docs/concepts.md), [`docs/api-reference.md`](./docs/api-reference.md), [`docs/integration.md`](./docs/integration.md), and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) for the integration model.
 
 ## React Hooks
 

@@ -25,6 +25,28 @@ Related:
 - Commit `...`
 ```
 
+## 2026-06-09
+
+### Task Pack Template Guide
+
+Reason:
+Developers adapting Playable AI need a copyable starting point that shows how snapshots, task packs, provider boundaries, candidate validation, operation mapping, and review UI fit together.
+
+Updated:
+- Added `docs/task-pack-template.md`.
+- Included a copyable TypeScript skeleton for state, operations, snapshot adapter, task pack, mock provider, SDK validation, host payload validation, and host-owned apply.
+- Added adaptation notes for board, timeline, grid/editor, dashboard, and local-first app shapes.
+- Linked the guide from the docs index and README.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #24
+
 ## 2026-06-08
 
 ### Contributor-Ready Issue Backlog
