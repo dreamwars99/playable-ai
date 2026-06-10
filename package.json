@@ -29,9 +29,11 @@
     "typecheck": "corepack pnpm --filter playable-ai build && corepack pnpm --filter @playable-ai/react build && corepack pnpm --filter @playable-ai/server build && corepack pnpm -r typecheck",
     "test": "corepack pnpm --filter playable-ai test && corepack pnpm --filter @playable-ai/server test",
     "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm build",
-    "pack:check": "corepack pnpm build && corepack pnpm --dir packages/core exec npm pack --dry-run --json && corepack pnpm --dir packages/react exec npm pack --dry-run --json && corepack pnpm --dir packages/server exec npm pack --dry-run --json"
+    "pack:check": "corepack pnpm build && corepack pnpm --dir packages/core exec npm pack --dry-run --json && corepack pnpm --dir packages/react exec npm pack --dry-run --json && corepack pnpm --dir packages/server exec npm pack --dry-run --json",
+    "smoke:examples": "node scripts/smoke-examples.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.60.0",
     "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@9.15.0"
