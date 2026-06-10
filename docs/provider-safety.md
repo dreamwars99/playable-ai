@@ -47,6 +47,7 @@ Recommended responsibilities:
 - keep provider keys in server-side secrets
 - redact sensitive fields before provider calls
 - validate candidate operation types
+- validate host-owned payload rules before apply
 - record useful audit metadata
 - return only structured candidates to the frontend
 
@@ -103,7 +104,7 @@ The app backend should still own auth, rate limits, logging policy, output valid
 - Do not ask users to paste remote API keys into public examples.
 - Do not treat raw model text as trusted app state.
 - Validate or normalize model output into candidates.
-- Run `validateCandidateForTask` or equivalent host validation before applying candidates.
+- Run `validateCandidateForTask` and host-owned payload validation before applying candidates.
 - Keep human review between candidates and app mutation.
 - Let host apps decide what gets applied.
 - Prefer mock providers for examples unless the example is explicitly local-only.
@@ -120,6 +121,7 @@ Before connecting a real provider, answer these questions:
 - Which operation types are allowed?
 - What parser turns model output into candidates?
 - What validation rejects malformed or disallowed operations?
+- What host validation rejects unknown target ids, invalid payload values, missing permissions, or locked targets?
 - What UI shows candidates before apply?
 - What logs are kept, and do they avoid secrets?
 
@@ -153,6 +155,8 @@ Backend or local runtime code may:
 - reject malformed candidates
 
 This boundary should return structured candidates, not direct mutations.
+
+For the apply-side validation pattern, see [Integration Lifecycle: Candidate Validation](./integration-lifecycle.md#6-candidate-validation).
 
 ## Real-World Reference Integrations
 

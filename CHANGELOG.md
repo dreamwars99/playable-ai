@@ -6,6 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Document host-owned payload validation patterns.
 - Add choose-your-app-shape quickstart links.
 - Add a copyable task pack template guide.
 - Add a contributor-ready issue backlog and roadmap issue tracking.

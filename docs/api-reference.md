@@ -277,6 +277,8 @@ The helper checks:
 
 It does not replace host-app business rules. Apps should still enforce permissions, ownership, locks, quotas, and domain-specific validation before applying operations.
 
+For a host-owned payload validation example, see [Integration Lifecycle: Candidate Validation](./integration-lifecycle.md#6-candidate-validation).
+
 ## React Package
 
 Import from `@playable-ai/react`.

@@ -29,6 +29,7 @@ type BoardCard = {
   title: string;
   column: "todo" | "doing" | "done";
   priority: "low" | "medium" | "high";
+  locked?: boolean;
 };
 
 type BoardState = {
@@ -177,6 +178,71 @@ if (!validation.valid) {
 
 Real apps should still validate domain rules before applying operations. For example, a board app should check whether a card exists, a user has permission, a lock is active, or a payload value is allowed by the current workspace.
 
+SDK-level validation answers "does this candidate fit the Playable AI contract?" Host-owned validation answers "is this operation allowed in this app, for this user, right now?"
+
+```ts
+import { type PlayableOperation } from "playable-ai";
+
+const allowedColumns = ["todo", "doing", "done"] as const satisfies readonly BoardCard["column"][];
+const allowedPriorities = ["low", "medium", "high"] as const satisfies readonly BoardCard["priority"][];
+
+function isBoardColumn(value: unknown): value is BoardCard["column"] {
+  return typeof value === "string" && allowedColumns.includes(value as BoardCard["column"]);
+}
+
+function isBoardPriority(value: unknown): value is BoardCard["priority"] {
+  return typeof value === "string" && allowedPriorities.includes(value as BoardCard["priority"]);
+}
+
+function validateBoardOperationForApply(
+  state: BoardState,
+  operation: PlayableOperation,
+  user: { canEditBoard: boolean }
+) {
+  if (!user.canEditBoard) {
+    throw new Error("User cannot edit this board.");
+  }
+
+  const card = state.cards.find((item) => item.id === operation.targetId);
+
+  if (!card) {
+    throw new Error(`Unknown card id: ${operation.targetId ?? "(missing)"}`);
+  }
+
+  if (card.locked) {
+    throw new Error(`Card is locked: ${card.id}`);
+  }
+
+  if (operation.type === "card.move") {
+    if (!isBoardColumn(operation.payload.column)) {
+      throw new Error("Invalid destination column.");
+    }
+
+    return;
+  }
+
+  if (operation.type === "card.update-priority") {
+    if (!isBoardPriority(operation.payload.priority)) {
+      throw new Error("Invalid priority.");
+    }
+
+    return;
+  }
+
+  throw new Error(`Unsupported operation: ${operation.type}`);
+}
+```
+
+Good host-owned validation usually checks:
+
+- target ids exist in the current state
+- enum values and numeric ranges are valid for the app
+- the current user has permission to change the target
+- the target is not locked, archived, stale, or owned by another workflow
+- payload-specific rules still hold after any state changes since the task was created
+
+Candidates remain untrusted until the host app accepts them. A provider, parser, mock fixture, or local model can produce a well-formed candidate that is still wrong for the current domain state.
+
 ## 7. Review Queue
 
 Candidates should wait for user or maintainer review.
@@ -248,6 +314,7 @@ This is why the same SDK can support a board, game editor, timeline, map, graph,
 - [ ] Decide where the provider call runs.
 - [ ] Parse provider output into candidates.
 - [ ] Validate candidates against the task before review or apply.
+- [ ] Validate target ids, permissions, locks, ranges, enums, and payload-specific rules in the host app.
 - [ ] Show candidates before applying anything.
 - [ ] Map approved operations to host app commands.
 - [ ] Test invalid operation types and rejected candidates.

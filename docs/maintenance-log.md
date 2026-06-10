@@ -27,6 +27,25 @@ Related:
 
 ## 2026-06-10
 
+### Host Payload Validation Patterns
+
+Reason:
+Apps need to understand that SDK-level candidate validation is only the generic contract check. Domain rules such as permissions, locks, target existence, and payload-specific constraints still belong to the host app before apply.
+
+Updated:
+- Expanded the integration lifecycle candidate validation section with a TypeScript host validation example.
+- Added checklist coverage for target ids, permissions, locks, ranges, enums, and payload-specific rules.
+- Added provider safety and API reference cross-links to the host validation guidance.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #21
+
 ### Choose Your App Shape Quickstart
 
 Reason:
