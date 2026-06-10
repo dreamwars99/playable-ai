@@ -57,6 +57,8 @@ Keep public examples safe by default, but add reference docs for:
 
 Remote provider keys should not be stored in browser examples.
 
+The local runtime boundary is documented in [`local-provider-guide.md`](./local-provider-guide.md).
+
 ### 4. Example Smoke Automation
 
 The examples already build in CI. A future improvement is a lightweight smoke check that confirms each example can render its main screen and generate reviewable mock candidates.

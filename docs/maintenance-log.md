@@ -27,6 +27,25 @@ Related:
 
 ## 2026-06-10
 
+### Local Provider Integration Guide
+
+Reason:
+Developers need a safe path for local runtimes and OpenAI-compatible local endpoints that does not teach browser-secret storage or direct AI-to-state mutation.
+
+Updated:
+- Added `docs/local-provider-guide.md`.
+- Documented the frontend/backend-or-local-runtime boundary, configuration ownership, provider output parsing, SDK validation, host validation, and review-first apply flow.
+- Linked the guide from README, docs index, integration docs, provider safety docs, server package README, and roadmap.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #25
+
 ### Example Smoke Check Design
 
 Reason:

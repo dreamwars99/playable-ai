@@ -39,7 +39,7 @@ Use the closest existing path, then adapt the task pack template to your app:
 | A board, kanban, or workflow tool | [`examples/kanban-quest`](./examples/kanban-quest) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
 | A grid, game editor, or simulation surface | [`examples/tactics-grid`](./examples/tactics-grid) and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) |
 | A timeline, outline, or ordered review tool | [`examples/timeline-review`](./examples/timeline-review) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
-| A local-first app with a local runtime | [`docs/provider-safety.md`](./docs/provider-safety.md) and [`packages/server`](./packages/server) |
+| A local-first app with a local runtime | [`docs/local-provider-guide.md`](./docs/local-provider-guide.md), [`docs/provider-safety.md`](./docs/provider-safety.md), and [`packages/server`](./packages/server) |
 | A provider-backed app with a backend | [`docs/integration.md`](./docs/integration.md) and [`docs/provider-safety.md`](./docs/provider-safety.md) |
 
 ## At A Glance
@@ -49,6 +49,7 @@ Use the closest existing path, then adapt the task pack template to your app:
 - **Packages:** framework-neutral core, optional React hooks, optional server/provider helpers
 - **Examples:** tactics grid, kanban board, timeline review
 - **Provider stance:** mock examples by default; remote provider secrets stay out of browser bundles
+- **Local providers:** see [`docs/local-provider-guide.md`](./docs/local-provider-guide.md)
 - **Template:** start with [`docs/task-pack-template.md`](./docs/task-pack-template.md)
 - **Roadmap:** see [`docs/roadmap.md`](./docs/roadmap.md)
 

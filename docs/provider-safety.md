@@ -87,6 +87,8 @@ Use this for local sLLM, LM Studio, Ollama-like, or self-hosted endpoints.
 
 Local runtime integrations should still treat model output as untrusted. A local model can return invalid operations just like a remote model can.
 
+For a local runtime walkthrough, see [`local-provider-guide.md`](./local-provider-guide.md).
+
 ### Self-Hosted Remote Provider
 
 Best for teams that run their own model gateway.

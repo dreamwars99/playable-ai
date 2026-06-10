@@ -6,6 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Add a local provider integration guide.
 - Add example smoke check design guidance.
 - Document host-owned payload validation patterns.
 - Add choose-your-app-shape quickstart links.

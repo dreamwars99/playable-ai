@@ -10,6 +10,7 @@ Start with:
 - [`integration.md`](./integration.md)
 - [`integration-lifecycle.md`](./integration-lifecycle.md)
 - [`example-smoke-checks.md`](./example-smoke-checks.md)
+- [`local-provider-guide.md`](./local-provider-guide.md)
 - [`maintenance.md`](./maintenance.md)
 - [`maintenance-log.md`](./maintenance-log.md)
 - [`provider-safety.md`](./provider-safety.md)

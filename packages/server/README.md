@@ -27,6 +27,8 @@ const result = await provider.run({ task });
 
 For local or self-hosted endpoints, set `endpoint` to the local server URL and omit `apiKey` if the runtime does not require one.
 
+For the frontend/backend-or-local-runtime boundary, see [`docs/local-provider-guide.md`](../../docs/local-provider-guide.md).
+
 ## Expected Model Output
 
 The model should return JSON with a `candidates` array:
