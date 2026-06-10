@@ -9,6 +9,8 @@ import { chromium } from "playwright";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const validationText = "Validation passed before apply.";
 
+const packagesToBuild = ["playable-ai", "@playable-ai/react", "@playable-ai/server"];
+
 const examples = [
   {
     name: "tactics-grid",
@@ -42,6 +44,8 @@ const examples = [
 const browser = await chromium.launch();
 
 try {
+  buildWorkspacePackages();
+
   for (const example of examples) {
     await smokeExample(example);
   }
@@ -96,7 +100,19 @@ async function smokeExample(example) {
 }
 
 function runBuild(example) {
-  const result = spawnSync("corepack", ["pnpm", "--filter", example.packageName, "build"], {
+  runPackageScript(example.packageName, "build", `${example.name} build failed.`);
+}
+
+function buildWorkspacePackages() {
+  console.log("[smoke] building workspace packages");
+
+  for (const packageName of packagesToBuild) {
+    runPackageScript(packageName, "build", `${packageName} build failed.`);
+  }
+}
+
+function runPackageScript(packageName, scriptName, failureMessage) {
+  const result = spawnSync("corepack", ["pnpm", "--filter", packageName, scriptName], {
     cwd: repoRoot,
     encoding: "utf8",
     stdio: "pipe"
@@ -105,7 +121,7 @@ function runBuild(example) {
   if (result.status !== 0) {
     throw new Error(
       [
-        `${example.name} build failed.`,
+        failureMessage,
         result.stdout.trim(),
         result.stderr.trim()
       ]
