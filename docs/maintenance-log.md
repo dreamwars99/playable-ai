@@ -27,6 +27,26 @@ Related:
 
 ## 2026-06-10
 
+### Example Smoke Check Design
+
+Reason:
+The runnable examples build in CI, but maintainers need a lightweight plan for proving that each demo can render, create a task preview, generate mock-provider candidates, and keep candidate apply behind validation.
+
+Updated:
+- Added `docs/example-smoke-checks.md`.
+- Documented the preferred build-output plus browser-runner shape for future smoke automation.
+- Listed per-example render, task, candidate, and apply checks for tactics-grid, kanban-quest, and timeline-review.
+- Linked the design from maintainer workflow docs, docs index, and roadmap.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #23
+
 ### Host Payload Validation Patterns
 
 Reason:

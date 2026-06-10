@@ -9,6 +9,7 @@ Start with:
 - [`task-pack-template.md`](./task-pack-template.md)
 - [`integration.md`](./integration.md)
 - [`integration-lifecycle.md`](./integration-lifecycle.md)
+- [`example-smoke-checks.md`](./example-smoke-checks.md)
 - [`maintenance.md`](./maintenance.md)
 - [`maintenance-log.md`](./maintenance-log.md)
 - [`provider-safety.md`](./provider-safety.md)

@@ -93,6 +93,12 @@ Also check public docs and examples for unsafe private or provider-secret conten
 
 Use focused validation for very small docs-only edits when speed matters, but run the full check before releases or package behavior changes.
 
+## Example Smoke Checks
+
+The examples currently typecheck and build through `pnpm check`. The next smoke layer should stay lightweight and verify that each built example renders, creates a task preview, generates mock-provider candidates, and keeps candidates behind validation and review.
+
+Use [`example-smoke-checks.md`](./example-smoke-checks.md) as the design reference before adding a new smoke script or CI job.
+
 ## Maintenance Log
 
 Update [`maintenance-log.md`](./maintenance-log.md) when a task changes maintainer workflow, release process, packaging, CI, provider safety behavior, or public API boundaries.

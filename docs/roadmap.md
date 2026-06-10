@@ -61,6 +61,8 @@ Remote provider keys should not be stored in browser examples.
 
 The examples already build in CI. A future improvement is a lightweight smoke check that confirms each example can render its main screen and generate reviewable mock candidates.
 
+The initial smoke design is documented in [`example-smoke-checks.md`](./example-smoke-checks.md). Implementation should keep CI small, run against built example output or `vite preview`, and avoid remote provider calls.
+
 ### 5. Contributor-Friendly Issues
 
 Open small, well-scoped issues for docs, examples, validation patterns, and provider adapter tests. Contributors should be able to improve examples without touching core package internals.
