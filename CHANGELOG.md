@@ -6,6 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Add runnable browser smoke checks for example apps.
 - Add a local provider integration guide.
 - Add example smoke check design guidance.
 - Document host-owned payload validation patterns.

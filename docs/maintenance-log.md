@@ -27,6 +27,29 @@ Related:
 
 ## 2026-06-10
 
+### Example Smoke Check Automation
+
+Reason:
+The examples should be verified as runnable integration references, not only TypeScript builds. A lightweight smoke job gives maintainers confidence that each demo renders, creates a task preview, generates mock-provider candidates, and keeps apply behind validation.
+
+Updated:
+- Added `scripts/smoke-examples.mjs`.
+- Added the root `pnpm smoke:examples` script.
+- Added Playwright as a root dev dependency for smoke automation.
+- Added a GitHub Actions `example smoke` job on Node 24.
+- Updated the smoke check, maintenance, roadmap, and changelog docs.
+
+Validation:
+- `pnpm smoke:examples`
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #26
+- Commit `686b5b7`
+
 ### Local Provider Integration Guide
 
 Reason:

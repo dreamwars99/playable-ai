@@ -61,9 +61,9 @@ The local runtime boundary is documented in [`local-provider-guide.md`](./local-
 
 ### 4. Example Smoke Automation
 
-The examples already build in CI. A future improvement is a lightweight smoke check that confirms each example can render its main screen and generate reviewable mock candidates.
+The examples build in CI and now have a lightweight smoke check that confirms each example can render its main screen, generate reviewable mock candidates, and apply one validated candidate.
 
-The initial smoke design is documented in [`example-smoke-checks.md`](./example-smoke-checks.md). Implementation should keep CI small, run against built example output or `vite preview`, and avoid remote provider calls.
+The smoke check is documented in [`example-smoke-checks.md`](./example-smoke-checks.md). It should stay small, run against built example output, and avoid remote provider calls.
 
 ### 5. Contributor-Friendly Issues
 

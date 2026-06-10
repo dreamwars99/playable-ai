@@ -68,3 +68,32 @@ jobs:
 
       - name: Package dry-run
         run: pnpm pack:check
+
+  example-smoke:
+    name: example smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: "24"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Use pnpm
+        run: corepack prepare pnpm@9.15.0 --activate
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Smoke examples
+        run: pnpm smoke:examples

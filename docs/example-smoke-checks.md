@@ -2,7 +2,13 @@
 
 Playable AI examples should stay small, fast to run, and safe by default. The current CI already typechecks and builds each example through `pnpm check`. A smoke check should add confidence that the built demos can render and generate mock candidates without turning the repository into a heavy end-to-end test suite.
 
-This is a design note for the first runnable smoke automation. It does not introduce a new test framework yet.
+The first implementation is available as:
+
+```bash
+pnpm smoke:examples
+```
+
+The script builds each runnable example, serves the built output with a small local static server, opens it with Playwright Chromium, clicks the mock-provider action, checks validation text, applies the first candidate, and confirms the app still renders.
 
 ## Goals
 
@@ -20,9 +26,9 @@ This is a design note for the first runnable smoke automation. It does not intro
 - no broad visual regression testing
 - no real domain correctness scoring
 
-## Preferred Runner Shape
+## Runner Shape
 
-Use build output plus a lightweight browser runner.
+The smoke runner uses build output plus a lightweight browser runner.
 
 ```text
 pnpm check
@@ -33,22 +39,22 @@ pnpm check
 -> assert candidate UI appears
 ```
 
-Build output is more production-like than a dev server and reuses the work CI already performs. A dev server is useful while developing tests locally, but the default CI smoke should run against built assets or `vite preview` so it catches bundling and runtime issues together.
+Build output is more production-like than a dev server. A dev server is useful while developing tests locally, but the default CI smoke runs against built assets so it catches bundling and runtime issues together.
 
 A browser runner is the right layer for the first real smoke because the important behavior is interactive: render the app, click the mock-provider button, and observe candidate cards. Node-only tests can cover package helpers, but they cannot prove that the example UI is wired correctly.
 
 ## CI Budget
 
-Keep the smoke job separate from the existing Node 22/24 package matrix:
+The smoke job stays separate from the existing Node 22/24 package matrix:
 
 - run on Node 24 only
-- run one browser engine, preferably Chromium
+- run one browser engine, Chromium
 - run examples serially to avoid flaky port conflicts
 - avoid screenshots and traces unless a check fails
 - fail fast when an example does not render or generate candidates
 - target under two minutes after dependencies are installed
 
-If a browser framework is added later, document the dependency and keep it scoped to example smoke checks.
+Playwright is scoped to the root smoke script and CI job. It is not used by the example apps at runtime.
 
 ## Per-Example Checks
 
@@ -60,9 +66,9 @@ If a browser framework is added later, document the dependency and keep it scope
 
 Prefer accessible selectors from visible headings, labels, and button names. Add stable test ids only when accessible selectors become too brittle.
 
-## Proposed Script
+## Script Manifest
 
-When implementation is ready, add a root script such as:
+The root script is:
 
 ```json
 {
@@ -72,7 +78,7 @@ When implementation is ready, add a root script such as:
 }
 ```
 
-The script can discover examples from a small manifest:
+The script uses an explicit manifest:
 
 ```ts
 const examples = [
@@ -86,7 +92,7 @@ const examples = [
 ];
 ```
 
-The first implementation should keep the manifest explicit. That makes failures easier to read and avoids guessing how every future example should behave.
+Keeping the manifest explicit makes failures easier to read and avoids guessing how every future example should behave.
 
 ## Maintenance Rule
 

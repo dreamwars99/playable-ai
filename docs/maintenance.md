@@ -95,9 +95,15 @@ Use focused validation for very small docs-only edits when speed matters, but ru
 
 ## Example Smoke Checks
 
-The examples currently typecheck and build through `pnpm check`. The next smoke layer should stay lightweight and verify that each built example renders, creates a task preview, generates mock-provider candidates, and keeps candidates behind validation and review.
+The examples typecheck and build through `pnpm check`. They also have a lightweight browser smoke check:
 
-Use [`example-smoke-checks.md`](./example-smoke-checks.md) as the design reference before adding a new smoke script or CI job.
+```bash
+pnpm smoke:examples
+```
+
+The smoke script verifies that each built example renders, creates a task preview, generates mock-provider candidates, and keeps candidates behind validation and review.
+
+Use [`example-smoke-checks.md`](./example-smoke-checks.md) as the reference before adding a new example or changing the smoke manifest.
 
 ## Maintenance Log
 
