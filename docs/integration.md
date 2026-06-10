@@ -4,6 +4,13 @@ Playable AI is designed for apps that already have their own state, UI, backend,
 
 To integrate it, build five small pieces.
 
+If you are choosing a starting point, use the closest existing example:
+
+- board or workflow app: [`examples/kanban-quest`](../examples/kanban-quest)
+- grid, game editor, or simulation surface: [`examples/tactics-grid`](../examples/tactics-grid)
+- timeline, outline, or ordered review tool: [`examples/timeline-review`](../examples/timeline-review)
+- local-first or provider-backed app: start with [`provider-safety.md`](./provider-safety.md) and keep provider execution outside public browser bundles
+
 ## 1. Snapshot Adapter
 
 Turn your app state into a JSON-safe snapshot.

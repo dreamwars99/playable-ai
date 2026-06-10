@@ -30,6 +30,18 @@ pnpm --filter @playable-ai/example-kanban-quest dev
 
 Then open the local Vite URL, generate mock candidates, inspect the task JSON, and apply a validated candidate.
 
+## Choose Your App Shape
+
+Use the closest existing path, then adapt the task pack template to your app:
+
+| If your app is... | Start with... |
+| --- | --- |
+| A board, kanban, or workflow tool | [`examples/kanban-quest`](./examples/kanban-quest) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
+| A grid, game editor, or simulation surface | [`examples/tactics-grid`](./examples/tactics-grid) and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) |
+| A timeline, outline, or ordered review tool | [`examples/timeline-review`](./examples/timeline-review) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
+| A local-first app with a local runtime | [`docs/provider-safety.md`](./docs/provider-safety.md) and [`packages/server`](./packages/server) |
+| A provider-backed app with a backend | [`docs/integration.md`](./docs/integration.md) and [`docs/provider-safety.md`](./docs/provider-safety.md) |
+
 ## At A Glance
 
 - **Status:** early public SDK, source release `v0.2.0`

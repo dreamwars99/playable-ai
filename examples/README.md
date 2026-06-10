@@ -12,6 +12,12 @@ Examples should be isolated and runnable with `pnpm`.
 
 All current examples use mock providers and validate candidates before applying operations to local app state.
 
+Choose the closest example for your app shape:
+
+- board or workflow app: start with [`kanban-quest`](./kanban-quest)
+- grid, game editor, or simulation surface: start with [`tactics-grid`](./tactics-grid)
+- timeline, outline, or ordered review tool: start with [`timeline-review`](./timeline-review)
+
 Current examples:
 
 - `tactics-grid`: fictional 6x6 game/editor balancing demo

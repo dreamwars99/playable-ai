@@ -6,6 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Add choose-your-app-shape quickstart links.
 - Add a copyable task pack template guide.
 - Add a contributor-ready issue backlog and roadmap issue tracking.
 - Add a public roadmap and improve the repository entry-point quickstart.

@@ -25,6 +25,27 @@ Related:
 - Commit `...`
 ```
 
+## 2026-06-10
+
+### Choose Your App Shape Quickstart
+
+Reason:
+New visitors need a fast way to map their app shape to the closest example or integration guide without reading the full documentation set first.
+
+Updated:
+- Added a README section that maps board, grid/game editor, timeline, local-first, and provider-backed apps to the best starting docs or examples.
+- Added matching example-selection notes to `examples/README.md`.
+- Added a short starting-point list to `docs/integration.md`.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #22
+
 ## 2026-06-09
 
 ### Task Pack Template Guide
