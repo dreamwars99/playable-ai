@@ -17,12 +17,14 @@ Choose the closest example for your app shape:
 - board or workflow app: start with [`kanban-quest`](./kanban-quest)
 - grid, game editor, or simulation surface: start with [`tactics-grid`](./tactics-grid)
 - timeline, outline, or ordered review tool: start with [`timeline-review`](./timeline-review)
+- backend or user-controlled local runtime: start with [`local-provider-runtime`](./local-provider-runtime)
 
 Current examples:
 
 - `tactics-grid`: fictional 6x6 game/editor balancing demo
 - `kanban-quest`: task board suggestions
 - `timeline-review`: event timeline review for continuity, pacing, and missing bridge candidates
+- `local-provider-runtime`: non-UI reference route for OpenAI-compatible local provider execution
 
 Planned examples:
 

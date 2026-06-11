@@ -39,7 +39,7 @@ Use the closest existing path, then adapt the task pack template to your app:
 | A board, kanban, or workflow tool | [`examples/kanban-quest`](./examples/kanban-quest) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
 | A grid, game editor, or simulation surface | [`examples/tactics-grid`](./examples/tactics-grid) and [`docs/integration-lifecycle.md`](./docs/integration-lifecycle.md) |
 | A timeline, outline, or ordered review tool | [`examples/timeline-review`](./examples/timeline-review) and [`docs/task-pack-template.md`](./docs/task-pack-template.md) |
-| A local-first app with a local runtime | [`docs/local-provider-guide.md`](./docs/local-provider-guide.md), [`docs/provider-safety.md`](./docs/provider-safety.md), and [`packages/server`](./packages/server) |
+| A local-first app with a local runtime | [`examples/local-provider-runtime`](./examples/local-provider-runtime), [`docs/local-provider-guide.md`](./docs/local-provider-guide.md), and [`packages/server`](./packages/server) |
 | A provider-backed app with a backend | [`docs/integration.md`](./docs/integration.md) and [`docs/provider-safety.md`](./docs/provider-safety.md) |
 
 ## At A Glance
@@ -107,17 +107,18 @@ The first public release includes a small set of reusable primitives:
 - a diagram tool that asks AI to detect missing steps
 - a local-first app that can use either a local sLLM endpoint or a remote provider
 
-## Example Apps
+## Examples
 
-Playable AI ships with small example apps that use the same core SDK contract.
+Playable AI ships with small examples that use the same core SDK contract.
 
 | Example | What it proves | Run |
 | --- | --- | --- |
 | `examples/tactics-grid` | A fictional game/editor can turn a level map into reviewable balance candidates. | `pnpm --filter @playable-ai/example-tactics-grid dev` |
 | `examples/kanban-quest` | A normal productivity board can use the same task/candidate flow. | `pnpm --filter @playable-ai/example-kanban-quest dev` |
 | `examples/timeline-review` | An event timeline can turn continuity and pacing review into small human-approved candidates. | `pnpm --filter @playable-ai/example-timeline-review dev` |
+| `examples/local-provider-runtime` | A backend or user-controlled local runtime can call an OpenAI-compatible endpoint without browser-held keys. | `pnpm --filter @playable-ai/example-local-provider-runtime test` |
 
-All examples use mock providers. They do not call a remote model, do not need API keys, and do not mutate app state until the user applies a candidate.
+The UI examples use mock providers. The local-provider-runtime example uses mock fetch tests. None of the examples require real provider keys, and none mutate app state until the host app accepts a candidate.
 
 ### Tactics Grid
 

@@ -27,6 +27,9 @@ examples/
   city-sim/
     Simulation dashboard demo.
 
+  local-provider-runtime/
+    Non-UI backend or local runtime provider route reference.
+
 docs/
   Public documentation.
 
@@ -67,7 +70,7 @@ They can help backend apps run provider adapters safely, call OpenAI-compatible 
 
 ### `examples/*`
 
-Each example is an isolated app.
+Each example is isolated. Most examples are runnable apps; provider references may be non-UI runtimes.
 
 Examples should show how to adapt Playable AI without changing the core SDK. They may include their own UI, styles, mock providers, fixtures, and screenshots.
 
@@ -97,6 +100,16 @@ visible app state
 -> mock or real provider adapter
 -> candidates
 -> apply / ignore / edit
+```
+
+Non-UI runtime examples should instead show:
+
+```text
+task request
+-> backend or local runtime route
+-> provider adapter
+-> candidate validation
+-> structured response
 ```
 
 ## Merge Conflict Strategy

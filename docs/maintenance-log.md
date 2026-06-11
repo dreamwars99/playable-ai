@@ -27,6 +27,28 @@ Related:
 
 ## 2026-06-11
 
+### Local Provider Reference Route
+
+Reason:
+The local provider guide explained the safe runtime boundary, but maintainers also need a copyable reference that shows endpoint configuration, provider execution, candidate parsing, SDK validation, and structured route responses without requiring a real provider.
+
+Updated:
+- Added `examples/local-provider-runtime`.
+- Added mock-fetch tests for the local provider route.
+- Included the local provider runtime test in the root `pnpm test` workflow.
+- Linked the reference from README, examples docs, local provider guide, and repository structure docs.
+
+Validation:
+- `pnpm --filter @playable-ai/example-local-provider-runtime test`
+- `pnpm --filter @playable-ai/example-local-provider-runtime typecheck`
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- GitHub Actions Check
+
+Related:
+- Issue #28
+
 ### v0.2.1 Source Release
 
 Reason:

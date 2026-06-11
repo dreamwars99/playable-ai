@@ -89,7 +89,6 @@ These issues are meant to be small enough for focused contributions while still 
 - package publishing checklist for the first npm release
 - optional helper for typed operation payload validators
 - additional example app showing graph, map, or dashboard state
-- reference backend route for provider execution
 - redaction helpers for task snapshots
 - richer docs for AI coding agents adapting the SDK to a host app
 

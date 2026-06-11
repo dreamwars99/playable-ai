@@ -6,7 +6,7 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
-- Nothing yet.
+- Add a local provider reference route example.
 
 ## 0.2.1 - 2026-06-11
 

@@ -116,6 +116,8 @@ export async function runLocalProvider(task: PlayableTask) {
 
 This checks the generic SDK contract before returning candidates to the app. The host app should still run host-owned validation before apply, including target id existence, permissions, locks, enum/range checks, quotas, and payload-specific rules.
 
+A copyable reference route is available in [`examples/local-provider-runtime`](../examples/local-provider-runtime). It uses an injected mock fetch in tests, so it does not require a real provider key.
+
 ## Expected Provider Output
 
 The OpenAI-compatible adapter expects assistant content that parses into either a candidate array or an object with a `candidates` array:
