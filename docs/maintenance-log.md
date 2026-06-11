@@ -25,6 +25,31 @@ Related:
 - Commit `...`
 ```
 
+## 2026-06-11
+
+### v0.2.1 Source Release
+
+Reason:
+The repository has accumulated patch-level improvements after `v0.2.0`: task pack onboarding, host payload validation guidance, local provider integration docs, choose-your-app-shape links, and runnable example smoke automation.
+
+Updated:
+- Moved `CHANGELOG.md` Unreleased entries into `0.2.1`.
+- Updated package and example versions to `0.2.1`.
+- Updated public status and roadmap baseline from `v0.2.0` to `v0.2.1`.
+- Prepared the annotated `v0.2.1` tag and GitHub source release.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+- `pnpm smoke:examples`
+- `pnpm pack:check`
+- GitHub Actions Check
+
+Related:
+- Issue #27
+- Release `v0.2.1`
+
 ## 2026-06-10
 
 ### Example Smoke Check Automation

@@ -6,6 +6,10 @@ This project follows a simple release log while it is in early development.
 
 ## Unreleased
 
+- Nothing yet.
+
+## 0.2.1 - 2026-06-11
+
 - Add runnable browser smoke checks for example apps.
 - Add a local provider integration guide.
 - Add example smoke check design guidance.

@@ -10,15 +10,18 @@ snapshot -> task -> provider -> candidate -> validation -> review -> app-owned a
 
 ## Current Baseline
 
-The `v0.2.0` source release includes:
+The `v0.2.1` source release includes:
 
 - framework-neutral core primitives for tasks, candidates, operations, queues, mock providers, and candidate validation
 - optional React hooks for task packs, provider runners, and candidate queues
 - optional server helpers for OpenAI-compatible or local chat-completions-style providers
 - three runnable React examples
+- a copyable task pack template
+- host-owned payload validation guidance
+- local provider integration guidance
 - provider safety documentation
 - integration lifecycle documentation
-- CI for Node 22, Node 24, and package dry-runs
+- CI for Node 22, Node 24, package dry-runs, and example browser smoke checks
 
 ## Near-Term Priorities
 

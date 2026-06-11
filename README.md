@@ -44,7 +44,7 @@ Use the closest existing path, then adapt the task pack template to your app:
 
 ## At A Glance
 
-- **Status:** early public SDK, source release `v0.2.0`
+- **Status:** early public SDK, source release `v0.2.1`
 - **Core loop:** `snapshot -> task -> provider -> candidate -> validation -> review -> app-owned apply`
 - **Packages:** framework-neutral core, optional React hooks, optional server/provider helpers
 - **Examples:** tactics grid, kanban board, timeline review
