@@ -33,6 +33,21 @@ Use a local provider integration when:
 
 Use mock providers for public examples and tests. Use a backend-mediated provider for hosted SaaS apps.
 
+## Deployment Shape Matrix
+
+Choose the smallest runtime that can safely own provider execution and secrets:
+
+| Shape | Runs where | Best for | Secret owner | Notes |
+| --- | --- | --- | --- | --- |
+| App backend route | Hosted server or serverless function | SaaS apps and shared team tools | App backend | Use normal app auth, rate limits, quotas, and audit logs. |
+| Local dev server | User or contributor machine | development, prototypes, local-first tools | Local process environment | Keep keys in `.env` or shell env files that are not committed. |
+| Desktop helper process | User device | desktop apps and local-first apps | OS secret storage or helper config | The browser or webview sends tasks to the helper instead of storing keys. |
+| CLI runtime | User terminal | scripts, batch review, maintainer automation | CLI flags, env vars, or local config | Good for testing task packs and provider compatibility. |
+| Self-hosted gateway | Team-controlled infrastructure | private model gateways and shared local models | Gateway or backend | The app backend should still own user auth and candidate validation. |
+| Static browser-only example | Public frontend bundle | screenshots, docs, playgrounds | none | Use mock providers only. Do not put remote provider keys here. |
+
+If a deployment shape cannot answer "where is the key stored?" and "who validates output before apply?", keep it in mock-provider mode until the boundary is clearer.
+
 ## Configuration Boundary
 
 Endpoint configuration belongs in the backend or local runtime, not in a public browser bundle.
@@ -53,6 +68,33 @@ Avoid these patterns:
 - endpoint secrets logged in task payloads, screenshots, or telemetry
 
 A local endpoint may not require a key. If it does, the key should still stay in the local runtime or backend that performs the provider call.
+
+## Route Request And Response Contract
+
+A provider route should accept a Playable AI task and return structured candidates. It should not return direct app mutations or raw provider text as trusted state.
+
+```ts
+import type { PlayableCandidate, PlayableCandidateValidationIssue, PlayableTask } from "playable-ai";
+
+type LocalProviderRouteRequest = {
+  task: PlayableTask;
+};
+
+type LocalProviderRouteResponse = {
+  candidates: PlayableCandidate[];
+  rejected?: Array<{
+    candidateId?: string;
+    issues: PlayableCandidateValidationIssue[];
+  }>;
+  meta?: {
+    providerId?: string;
+    model?: string;
+    durationMs?: number;
+  };
+};
+```
+
+The route may keep provider-specific diagnostics in server logs, but client responses should avoid secrets, full sensitive snapshots, and unparsed model output.
 
 ## Minimal Local Runtime Flow
 

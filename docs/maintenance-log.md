@@ -25,6 +25,26 @@ Related:
 - Commit `...`
 ```
 
+## 2026-06-12
+
+### Local Provider Deployment Shapes
+
+Reason:
+The local provider reference route shows how provider execution can be implemented, but maintainers also need to choose where that route should live before they connect real models or secrets.
+
+Updated:
+- Added a local provider deployment shape matrix.
+- Documented the minimal provider route request and response contract.
+- Linked the guidance from provider safety docs, docs index, roadmap, and the local provider runtime example.
+
+Validation:
+- `git diff --check`
+- public sensitive-term scan
+- `pnpm check`
+
+Related:
+- Issue #29
+
 ## 2026-06-11
 
 ### Local Provider Reference Route

@@ -41,6 +41,12 @@ PLAYABLE_AI_LOCAL_API_KEY=optional-local-token
 
 Do not put remote provider keys in browser state, static frontend builds, screenshots, fixtures, or logs.
 
+## Deployment Shape
+
+This package is a route helper, not a prescribed hosting model. You can adapt the same contract to an app backend, local development server, desktop helper process, CLI runtime, or self-hosted gateway.
+
+See [`docs/local-provider-guide.md`](../../docs/local-provider-guide.md#deployment-shape-matrix) for the deployment shape matrix and [`docs/local-provider-guide.md`](../../docs/local-provider-guide.md#route-request-and-response-contract) for the route request/response contract.
+
 ## Files
 
 - [`src/index.ts`](./src/index.ts): reference route helper.

@@ -21,3 +21,5 @@ Start with:
 - [`codex-for-oss-application-notes.md`](./codex-for-oss-application-notes.md)
 
 Docs should stay short, concrete, and useful to developers trying to adapt Playable AI to their own app.
+
+If you are deciding where provider execution should live, start with the deployment shape matrix in [`local-provider-guide.md`](./local-provider-guide.md#deployment-shape-matrix), then check [`provider-safety.md`](./provider-safety.md).

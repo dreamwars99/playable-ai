@@ -79,6 +79,7 @@ The first contributor-ready backlog is intentionally small and maps to the prior
 - Task pack templates: [#24](https://github.com/dreamwars99/playable-ai/issues/24)
 - Host payload validation patterns: [#21](https://github.com/dreamwars99/playable-ai/issues/21)
 - Local provider integration guide: [#25](https://github.com/dreamwars99/playable-ai/issues/25)
+- Local provider deployment shapes: [#29](https://github.com/dreamwars99/playable-ai/issues/29)
 - Example smoke check design: [#23](https://github.com/dreamwars99/playable-ai/issues/23)
 - Choose-your-app-shape quickstart: [#22](https://github.com/dreamwars99/playable-ai/issues/22)
 
